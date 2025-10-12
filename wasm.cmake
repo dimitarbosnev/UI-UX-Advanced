@@ -1,0 +1,13 @@
+set(CMAKE_SYSTEM_NAME Generic)
+set(CMAKE_SYSTEM_PROCESSOR wasm32)
+
+set(CMAKE_C_COMPILER clang)
+set(CMAKE_C_STANDARD 99)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_C_FLAGS "--target=wasm32 -mbulk-memory -Wno-unused-command-line-argument")
+set(CMAKE_CXX_FLAGS "--target=wasm32 -mbulk-memory -Wno-unused-command-line-argument")
+set(CMAKE_EXE_LINKER_FLAGS "--target=wasm32 -nostdlib -Wl,--no-entry -Wl,--export-dynamic -Wl,--strip-all -Wl,--export=__heap_base -Wl,--export=ACTIVE_RENDERER_INDEX -Wl,--initial-memory=6553600")
+set(CMAKE_LINKER wasm-ld CACHE FILEPATH "WebAssembly linker" FORCE)
+set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
