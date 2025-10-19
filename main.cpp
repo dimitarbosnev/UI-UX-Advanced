@@ -18,10 +18,11 @@ const Clay_Color COLOR_RED = (Clay_Color) {209, 52, 52, 255};
 const Clay_Color COLOR_RED_HOVER = (Clay_Color) {148, 46, 8, 255};
 const Clay_Color COLOR_ORANGE = (Clay_Color) {225, 138, 50, 255};
 const Clay_Color COLOR_GREEN = (Clay_Color) {56, 186, 47, 255};
-const Clay_Color COLOR_BLUE = (Clay_Color) {52, 112, 168, 255};
+const Clay_Color COLOR_BLUE = (Clay_Color) {52, 112, 168, 230};
 const Clay_Color COLOR_BROWN = (Clay_Color) {61, 26, 5, 255};
 
 const Clay_LayoutConfig defaultLayoutConfig = (Clay_LayoutConfig) { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING) };
+const Clay_LayoutConfig fitLayoutConfig = (Clay_LayoutConfig) { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }, .childGap = DEFAULT_SPACING, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING) };
 
 Clay_TextElementConfig titleTextConfig = (Clay_TextElementConfig) { .fontId = FONT_ID_BARTLE, .fontSize = 32, .textColor = COLOR_RED };
 Clay_TextElementConfig headerTextConfig = (Clay_TextElementConfig) { .fontId = FONT_ID_BARTLE, .fontSize = 24, .textColor = COLOR_BROWN };
@@ -159,13 +160,22 @@ void SideBar(){
             CLAY(CLAY_ID("Spacer_BOT"), { .layout = { .sizing = { .height = CLAY_SIZING_GROW(0) } } }) {}
     }
 }
+
+Clay_String mainpage_image = CLAY_STRING("images/mainpage.png");
 void MainLayout(){
-CLAY(CLAY_ID("OuterContainer"), { .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING), .childGap = DEFAULT_SPACING }, .backgroundColor = COLOR_LIGHT }) {
+CLAY(CLAY_ID("OuterContainer"), { .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .padding = {DEFAULT_SPACING, 0, DEFAULT_SPACING, DEFAULT_SPACING, }, .childGap = DEFAULT_SPACING }, .backgroundColor = COLOR_LIGHT }) {
         CLAY_TEXT(CLAY_STRING("League of the Ancients"), &titleTextConfig);
         CLAY(CLAY_ID("PageContainer"), { .layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING }, .backgroundColor = COLOR_LIGHT, }){
             SideBar();
-            CLAY(CLAY_ID("FILLER"), { .backgroundColor = COLOR_RED, .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER), .layout = defaultLayoutConfig});
-            CLAY(CLAY_ID("FILLER2"), { .backgroundColor = COLOR_ORANGE, .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER), .layout= defaultLayoutConfig});
+            CLAY(CLAY_ID("ContentContainer"), { .layout = {.sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) },}, .backgroundColor = COLOR_LIGHT}){
+                CLAY(CLAY_ID("MAINPAGE_IMAGE"), { .image = { .imageData = &mainpage_image}, .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER), .aspectRatio = {16.0f/9.0f},
+                .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING, .padding = {DEFAULT_SPACING, DEFAULT_SPACING, DEFAULT_SPACING, 60 }, },
+                .floating = { .attachTo = CLAY_ATTACH_TO_PARENT, .attachPoints = { CLAY_ATTACH_POINT_RIGHT_BOTTOM, CLAY_ATTACH_POINT_RIGHT_BOTTOM}}});
+                CLAY(CLAY_ID("FILLER2"), { .backgroundColor = COLOR_BLUE, .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER), 
+                .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIXED(600), CLAY_SIZING_FIXED(400) }, .childGap = DEFAULT_SPACING }, 
+                .floating = { .attachTo = CLAY_ATTACH_TO_PARENT, .attachPoints = { CLAY_ATTACH_POINT_LEFT_BOTTOM, CLAY_ATTACH_POINT_LEFT_BOTTOM}}});
+            }
+
         }
     }
 }
@@ -212,11 +222,10 @@ Clay_RenderCommandArray CreateLayout(bool mobileScreen, float lerpValue) {
     }
     
     CLAY(CLAY_ID("OuterScrollContainer"), {
-        .layout = { .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .layoutDirection = CLAY_LEFT_TO_RIGHT },
+        .layout = { .sizing = { CLAY_SIZING_FIXED(0), CLAY_SIZING_GROW(0) }, .layoutDirection = CLAY_LEFT_TO_RIGHT },
         .clip = { .vertical = true, .childOffset = Clay_GetScrollOffset() },
         .border = { .width = { .betweenChildren = 2 }, .color = COLOR_RED }
-    }) {
-    }
+    });
     return Clay_EndLayout();
 }
 
