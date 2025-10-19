@@ -1,0 +1,17 @@
+{
+ "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(CMake) Launch",
+            "type": "cppvsdbg",
+            "request": "launch",
+            // Resolved by CMake Tools:  https://vector-of-bool.github.io/docs/vscode-cmake-tools/debugging.html
+            "program": "${command:cmake.launchTargetPath}",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": []
+        }
+    
+    ]
+}

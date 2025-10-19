@@ -4,9 +4,8 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="preload" href="/fonts/Calistoga-Regular.ttf" as="font" type="font/ttf" crossorigin>
-    <link rel="preload" href="/fonts/Quicksand-Semibold.ttf" as="font" type="font/ttf" crossorigin>
-    <title>Clay - UI Layout Library</title>
+    <link href="https://fonts.googleapis.com/css2?family=BBH+Sans+Bartle&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=BBH+Sans+Bogle&display=swap" rel="stylesheet">
     <style>
         html, body {
             width: 100%;
@@ -19,17 +18,17 @@
         }
         /* Import the font using @font-face */
         @font-face {
-          font-family: 'Calistoga';
-          font-style: normal;
-          font-weight: 400;
-          src: url('/fonts/Calistoga-Regular.ttf') format('truetype');
+            font-family: "BBH Sans Bartle", sans-serif;
+            font-style: normal;
+            font-weight: 400;
+            src: url("https://fonts.googleapis.com/css2?family=BBH+Sans+Bartle&display=swap") format('truetype');
         }
 
         @font-face {
-          font-family: 'Quicksand';
-          font-style: normal;
-          font-weight: 400;
-          src: url('/fonts/Quicksand-Semibold.ttf') format('truetype');
+            font-family: "BBH Sans Bogle", sans-serif;
+            font-style: normal;
+            font-weight: 400;
+            src: url("https://fonts.googleapis.com/css2?family=BBH+Sans+Bogle&display=swap") format('truetype');
         }
 
         body > canvas {
@@ -78,11 +77,8 @@
     let textDecoder = new TextDecoder("utf-8");
     let previousFrameTime;
     let fontsById = [
-        'Quicksand',
-        'Calistoga',
-        'Quicksand',
-        'Quicksand',
-        'Quicksand',
+        'BBH Sans Bartle',
+        'BBH Sans Bogle',
     ];
     let elementCache = {};
     let imageCache = {};
@@ -820,7 +816,7 @@
         previousFrameTime = currentTime;
         let activeRendererIndex = memoryDataView.getUint32(instance.exports.ACTIVE_RENDERER_INDEX.value, true);
         if (activeRendererIndex === 0) {
-            instance.exports.UpdateDrawFrame(scratchSpaceAddress, window.innerWidth, window.innerHeight, 0, 0, window.mousePositionXThisFrame, window.mousePositionYThisFrame, window.touchDown, window.mouseDown, 0, 0, window.dKeyPressedThisFrame, elapsed / 1000);
+            instance.exports.UpdateDrawFrame(scratchSpaceAddress, window.innerWidth, window.innerHeight, 0, 0, window.mousePositionXThisFrame, window.mousePositionYThisFrame, window.touchDown, window.mouseDown,0, 0, window.dKeyPressedThisFrame, elapsed / 1000);
         } else {
             instance.exports.UpdateDrawFrame(scratchSpaceAddress, window.innerWidth, window.innerHeight, window.mouseWheelXThisFrame, window.mouseWheelYThisFrame, window.mousePositionXThisFrame, window.mousePositionYThisFrame, window.touchDown, window.mouseDown, window.arrowKeyDownPressedThisFrame, window.arrowKeyUpPressedThisFrame, window.dKeyPressedThisFrame, elapsed / 1000);
         }
