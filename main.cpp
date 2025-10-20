@@ -12,6 +12,7 @@ const uint16_t FONT_ID_BOGLE = 1;
 #define DEFAULT_SPACING 16
 #define DEFAULT_CORNER 10
 
+const Clay_Color COLOR_TRANSPERENT = (Clay_Color) {0, 0, 0, 0};
 const Clay_Color COLOR_LIGHT = (Clay_Color) {244, 235, 230, 255};
 const Clay_Color COLOR_LIGHT_HOVER = (Clay_Color) {224, 215, 210, 255};
 const Clay_Color COLOR_RED = (Clay_Color) {209, 52, 52, 255};
@@ -24,11 +25,11 @@ const Clay_Color COLOR_BROWN = (Clay_Color) {61, 26, 5, 255};
 const Clay_LayoutConfig defaultLayoutConfig = (Clay_LayoutConfig) { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING) };
 const Clay_LayoutConfig fitLayoutConfig = (Clay_LayoutConfig) { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }, .childGap = DEFAULT_SPACING, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING) };
 
-Clay_TextElementConfig titleTextConfig = (Clay_TextElementConfig) { .fontId = FONT_ID_BARTLE, .fontSize = 32, .textColor = COLOR_RED };
-Clay_TextElementConfig headerTextConfig = (Clay_TextElementConfig) { .fontId = FONT_ID_BARTLE, .fontSize = 24, .textColor = COLOR_BROWN };
-Clay_TextElementConfig blobTextConfig = (Clay_TextElementConfig) { .fontId = FONT_ID_BARTLE, .fontSize = 30, .textColor = COLOR_LIGHT };
-Clay_TextElementConfig sideBarTextConfig = (Clay_TextElementConfig) { .fontId = FONT_ID_BOGLE, .fontSize = 36, .textColor = COLOR_RED };
-
+Clay_TextElementConfig titleTextConfig = (Clay_TextElementConfig) { .fontId = FONT_ID_BARTLE, .fontSize = 42, .textColor = COLOR_RED };
+Clay_TextElementConfig sideBarTextConfig = (Clay_TextElementConfig) { .fontId = FONT_ID_BOGLE, .fontSize = 36, .textColor = COLOR_LIGHT };
+Clay_TextElementConfig headerTextConfig = (Clay_TextElementConfig) { .fontId = FONT_ID_BARTLE, .fontSize = 36, .textColor = COLOR_LIGHT };
+Clay_TextElementConfig defaultTextConfig = (Clay_TextElementConfig) { .fontId = FONT_ID_BOGLE, .fontSize = 28, .textColor = COLOR_LIGHT };
+Clay_TextElementConfig smallTextConfig = (Clay_TextElementConfig) { .fontId = FONT_ID_BOGLE, .fontSize = 24, .textColor = COLOR_LIGHT_HOVER };
 typedef struct {
     void* memory;
     uintptr_t offset;
@@ -128,12 +129,13 @@ ScrollbarData scrollbarData = (ScrollbarData) {};
 float animationLerpValue = -1.0f;
 void SideBar(){
     sideBarTextConfig.userData = FrameAllocateCustomData((CustomHTMLData) { .disablePointerEvents = true });
-    CLAY(CLAY_ID("SideBar"), { .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_GROW(0) }, .childAlignment = { CLAY_ALIGN_X_LEFT, CLAY_ALIGN_Y_CENTER }, .childGap = DEFAULT_SPACING } }) {
-        CLAY(CLAY_ID("Spacer_TOP"), { .layout = { .sizing = { .height = CLAY_SIZING_GROW(0) } } }) {}
+    CLAY(CLAY_ID("SideBar"), { .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_GROW(0) }, 
+                               .childAlignment = { CLAY_ALIGN_X_LEFT, CLAY_ALIGN_Y_CENTER }, .childGap = DEFAULT_SPACING } }) {
+        CLAY(CLAY_ID("Spacer_TOP"), { .layout = { .sizing = { .height = CLAY_SIZING_GROW(0) } } });
         CLAY_AUTO_ID({
             .layout = { .padding = {16, 16, 6, 6} },
-            .backgroundColor = Clay_Hovered() || current_page == PAGE_MAIN ? COLOR_LIGHT_HOVER : COLOR_LIGHT,
-            .border = { .width = {2, 2, 2, 2}, .color = COLOR_RED },
+            .backgroundColor = Clay_Hovered() || current_page == PAGE_MAIN ? COLOR_RED : COLOR_TRANSPERENT,
+            .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
             .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER),
         }) {
             if(Clay_Hovered() && input.isMouseReleased) current_page = PAGE_MAIN;
@@ -141,8 +143,8 @@ void SideBar(){
         }
         CLAY_AUTO_ID({
             .layout = { .padding = {16, 16, 6, 6} },
-            .backgroundColor = Clay_Hovered() || current_page == PAGE_CHARACTERS ? COLOR_LIGHT_HOVER : COLOR_LIGHT,
-            .border = { .width = {2, 2, 2, 2}, .color = COLOR_RED },
+            .backgroundColor = Clay_Hovered() || current_page == PAGE_CHARACTERS ? COLOR_RED : COLOR_TRANSPERENT,
+            .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
             .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER),
         }) {
             if(Clay_Hovered() && input.isMouseReleased) current_page = PAGE_CHARACTERS;
@@ -150,43 +152,86 @@ void SideBar(){
         }
         CLAY_AUTO_ID({
             .layout = { .padding = {16, 16, 6, 6} },
-            .backgroundColor = Clay_Hovered() || current_page == PAGE_CHARACTER_DRAFT? COLOR_LIGHT_HOVER : COLOR_LIGHT,
-            .border = { .width = {2, 2, 2, 2}, .color = COLOR_RED },
+            .backgroundColor = Clay_Hovered() || current_page == PAGE_CHARACTER_DRAFT? COLOR_RED : COLOR_TRANSPERENT,
+            .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
             .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER)
         }) {
             //if(Clay_Hovered()) current_page = PAGE_CHARACTER_DRAFT;
             CLAY_TEXT(CLAY_STRING("Battle"), &sideBarTextConfig);
         }
-            CLAY(CLAY_ID("Spacer_BOT"), { .layout = { .sizing = { .height = CLAY_SIZING_GROW(0) } } }) {}
+            CLAY(CLAY_ID("Spacer_BOT"), { .layout = { .sizing = { .height = CLAY_SIZING_GROW(0) } } });
     }
 }
 
+Clay_String background_image = CLAY_STRING("images/background.jpg");
 Clay_String mainpage_image = CLAY_STRING("images/mainpage.png");
 void MainLayout(){
-CLAY(CLAY_ID("OuterContainer"), { .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .padding = {DEFAULT_SPACING, 0, DEFAULT_SPACING, DEFAULT_SPACING, }, .childGap = DEFAULT_SPACING }, .backgroundColor = COLOR_LIGHT }) {
+CLAY(CLAY_ID("OuterContainer"), { .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .padding = {DEFAULT_SPACING, 0, DEFAULT_SPACING, DEFAULT_SPACING, }, .childGap = DEFAULT_SPACING }, .image = {&background_image} }) {
         CLAY_TEXT(CLAY_STRING("League of the Ancients"), &titleTextConfig);
-        CLAY(CLAY_ID("PageContainer"), { .layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING }, .backgroundColor = COLOR_LIGHT, }){
+        CLAY(CLAY_ID("PageContainer"), { .layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING } }){
             SideBar();
-            CLAY(CLAY_ID("ContentContainer"), { .layout = {.sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) },}, .backgroundColor = COLOR_LIGHT}){
+            CLAY(CLAY_ID("ContentContainer"), { .layout = {.sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }}}){
                 CLAY(CLAY_ID("MAINPAGE_IMAGE"), { .image = { .imageData = &mainpage_image}, .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER), .aspectRatio = {16.0f/9.0f},
                 .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING, .padding = {DEFAULT_SPACING, DEFAULT_SPACING, DEFAULT_SPACING, 60 }, },
                 .floating = { .attachTo = CLAY_ATTACH_TO_PARENT, .attachPoints = { CLAY_ATTACH_POINT_RIGHT_BOTTOM, CLAY_ATTACH_POINT_RIGHT_BOTTOM}}});
-                CLAY(CLAY_ID("FILLER2"), { .backgroundColor = COLOR_BLUE, .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER), 
-                .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIXED(600), CLAY_SIZING_FIXED(400) }, .childGap = DEFAULT_SPACING }, 
-                .floating = { .attachTo = CLAY_ATTACH_TO_PARENT, .attachPoints = { CLAY_ATTACH_POINT_LEFT_BOTTOM, CLAY_ATTACH_POINT_LEFT_BOTTOM}}});
+                CLAY(CLAY_ID("MISSIONS"), { .backgroundColor = COLOR_BLUE, .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER), 
+                .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIXED(500), CLAY_SIZING_FIXED(400) }, .childGap = DEFAULT_SPACING, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING) }, 
+                .floating = { .attachTo = CLAY_ATTACH_TO_PARENT, .attachPoints = { CLAY_ATTACH_POINT_LEFT_BOTTOM, CLAY_ATTACH_POINT_LEFT_BOTTOM}}}){
+                    CLAY_TEXT(CLAY_STRING("Missions"), &headerTextConfig);
+                    CLAY_AUTO_ID({
+                        .layout = defaultLayoutConfig,
+                        .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
+                        .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER),
+                    }) {
+                        CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { .width = CLAY_SIZING_GROW(0) }}}){
+                            CLAY_TEXT(CLAY_STRING("First Win of the Day"), &defaultTextConfig);
+                            CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { .width = CLAY_SIZING_GROW(0) }, .padding = {DEFAULT_SPACING, 0, 0, 0 }}}){
+                               CLAY_TEXT(CLAY_STRING("Win an online Battle"), &smallTextConfig); 
+                                CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } } });
+                                CLAY_TEXT(CLAY_STRING("Progress: 0/1"), &smallTextConfig);
+                            }
+                        }
+                        CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } }, .border = { .width = {0, 0, 0, 2}, .color = COLOR_LIGHT }});
+                        CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { .width = CLAY_SIZING_GROW(0) }}}){
+                            CLAY_TEXT(CLAY_STRING("Head Hunter"), &defaultTextConfig);
+                            CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { .width = CLAY_SIZING_GROW(0) }, .padding = {DEFAULT_SPACING, 0, 0, 0 }}}){
+                               CLAY_TEXT(CLAY_STRING("Kill 20 enemies"), &smallTextConfig); 
+                                CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } } });
+                                CLAY_TEXT(CLAY_STRING("Progress: 0/20"), &smallTextConfig);
+                            }
+                        }
+                        CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } }, .border = { .width = {0, 0, 0, 2}, .color = COLOR_LIGHT }});
+                                                CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { .width = CLAY_SIZING_GROW(0) }}}){
+                            CLAY_TEXT(CLAY_STRING("Demolition"), &defaultTextConfig);
+                            CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { .width = CLAY_SIZING_GROW(0) }, .padding = {DEFAULT_SPACING, 0, 0, 0 }}}){
+                               CLAY_TEXT(CLAY_STRING("Destroy 5 towers in one game"), &smallTextConfig); 
+                                CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } } });
+                                CLAY_TEXT(CLAY_STRING("Progress: 0/1"), &smallTextConfig);
+                            }
+                        }
+                    }
+                }
             }
 
         }
     }
 }
 
+Clay_String alysia_image = CLAY_STRING("images/Alysia.png");
 void ChampionsLayout(){
-CLAY(CLAY_ID("OuterContainer"), { .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING), .childGap = DEFAULT_SPACING }, .backgroundColor = COLOR_LIGHT }) {
+CLAY(CLAY_ID("OuterContainer"), { .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING), .childGap = DEFAULT_SPACING }, .image = {&background_image} }) {
         CLAY_TEXT(CLAY_STRING("League of the Ancients"), &titleTextConfig);
-        CLAY(CLAY_ID("PageContainer"), { .layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING }, .backgroundColor = COLOR_LIGHT, }){
+        CLAY(CLAY_ID("PageContainer"), { .layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING } }){
             SideBar();
-            CLAY(CLAY_ID("FILLER"), { .backgroundColor = COLOR_RED, .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER), .layout = defaultLayoutConfig});
-            CLAY(CLAY_ID("FILLER2"), { .backgroundColor = COLOR_ORANGE, .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER), .layout = defaultLayoutConfig});
+            CLAY(CLAY_ID("CHAMPS"), { .backgroundColor = COLOR_ORANGE, .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER), .layout = defaultLayoutConfig});
+            CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }}}){
+                CLAY_AUTO_ID({ .layout = { .sizing = { .height = CLAY_SIZING_GROW(0) } } });
+                CLAY(CLAY_ID("ALYSIA_IMAGE"), { .image = { .imageData = &alysia_image}, .aspectRatio = {600.0f/800.0f},
+                .layout = {.sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }}});
+                CLAY_AUTO_ID({ .layout = { .sizing = { .height = CLAY_SIZING_GROW(0) } } });
+            }
+           
+            CLAY(CLAY_ID("CHAMP_INFO"), { .backgroundColor = COLOR_ORANGE, .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER), .layout = defaultLayoutConfig});
         }
     }
 }
@@ -194,7 +239,7 @@ CLAY(CLAY_ID("OuterContainer"), { .layout = { .layoutDirection = CLAY_TOP_TO_BOT
 void ChampionInfoLayout(){
     CLAY(CLAY_ID("OuterContainer"), { .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING), .childGap = DEFAULT_SPACING }, .backgroundColor = COLOR_LIGHT }) {
         CLAY_TEXT(CLAY_STRING("League of the Ancients"), &titleTextConfig);
-        CLAY(CLAY_ID("PageContainer"), { .layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING }, .backgroundColor = COLOR_LIGHT, }){
+        CLAY(CLAY_ID("PageContainer"), { .layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING } }){
             SideBar();
             CLAY(CLAY_ID("FILLER"), { .backgroundColor = COLOR_RED, .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER), .layout = defaultLayoutConfig});
             CLAY(CLAY_ID("FILLER2"), { .backgroundColor = COLOR_ORANGE, .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER), .layout = defaultLayoutConfig});
@@ -207,8 +252,6 @@ void ChampionDraftLayout(){
 
 void InGameLayout(){
 }
-
-
 
 Clay_RenderCommandArray CreateLayout(bool mobileScreen, float lerpValue) {
     Clay_BeginLayout();
