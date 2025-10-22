@@ -535,7 +535,7 @@ void HeaderBar(){
         CLAY(CLAY_ID("Spacer"), { .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } } });
         CLAY_AUTO_ID({
             .layout = { .padding = {16, 16, 6, 6} },
-            .backgroundColor = Clay_Hovered()? COLOR_RED : COLOR_TRANSPERENT,
+            .backgroundColor = Clay_Hovered()? COLOR_RED : COLOR_BLUE,
             .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
             .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER),
         }) {
@@ -543,7 +543,7 @@ void HeaderBar(){
         }
                 CLAY_AUTO_ID({
             .layout = { .padding = {16, 16, 6, 6} },
-            .backgroundColor = Clay_Hovered()? COLOR_RED : COLOR_TRANSPERENT,
+            .backgroundColor = Clay_Hovered()? COLOR_RED : COLOR_BLUE,
             .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
             .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER),
         }) {
@@ -558,7 +558,7 @@ void SideBar(){
         CLAY(CLAY_ID("Spacer_TOP"), { .layout = { .sizing = { .height = CLAY_SIZING_GROW(0) } } });
         CLAY_AUTO_ID({
             .layout = { .padding = {16, 16, 6, 6} },
-            .backgroundColor = Clay_Hovered()? COLOR_RED : current_page == PAGE_MAIN? COLOR_RED_HOVER : COLOR_TRANSPERENT,
+            .backgroundColor = Clay_Hovered()? COLOR_RED : current_page == PAGE_MAIN? COLOR_RED_HOVER : COLOR_BLUE,
             .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
             .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER),
         }) {
@@ -570,7 +570,7 @@ void SideBar(){
         }
         CLAY_AUTO_ID({
             .layout = { .padding = {16, 16, 6, 6} },
-            .backgroundColor = Clay_Hovered()? COLOR_RED : current_page == PAGE_CHARACTERS ? COLOR_RED_HOVER : COLOR_TRANSPERENT,
+            .backgroundColor = Clay_Hovered()? COLOR_RED : current_page == PAGE_CHARACTERS ? COLOR_RED_HOVER : COLOR_BLUE,
             .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
             .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER),
         }) {
@@ -579,7 +579,7 @@ void SideBar(){
         }
         CLAY_AUTO_ID({
             .layout = { .padding = {16, 16, 6, 6} },
-            .backgroundColor = Clay_Hovered()? COLOR_RED : current_page == PAGE_CHARACTER_DRAFT ? COLOR_RED_HOVER : COLOR_TRANSPERENT,
+            .backgroundColor = Clay_Hovered()? COLOR_RED : current_page == PAGE_CHARACTER_DRAFT ? COLOR_RED_HOVER : COLOR_BLUE,
             .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
             .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER)
         }) {
@@ -691,7 +691,7 @@ void CharacterInfo(CharInfo& character){
         .floating = { .attachTo = CLAY_ATTACH_TO_PARENT, .attachPoints = { CLAY_ATTACH_POINT_LEFT_TOP, CLAY_ATTACH_POINT_LEFT_TOP}}}){
             CLAY_AUTO_ID({
             .layout = { .padding = {16, 16, 6, 6} },
-            .backgroundColor = Clay_Hovered() ? COLOR_RED : COLOR_TRANSPERENT,
+            .backgroundColor = Clay_Hovered() ? COLOR_RED : COLOR_BLUE,
             .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
             .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER),
             }) {
@@ -783,7 +783,7 @@ void ChampionDraftLayout(){
     .floating = { .attachTo = CLAY_ATTACH_TO_PARENT, .attachPoints = { CLAY_ATTACH_POINT_CENTER_BOTTOM, CLAY_ATTACH_POINT_CENTER_BOTTOM}, .offset = {0, -50}}
     }){
         CLAY_AUTO_ID({ .layout = { .padding = {32, 32, 16, 16} },
-        .backgroundColor = Clay_Hovered()? COLOR_RED : COLOR_RED_HOVER,
+        .backgroundColor = Clay_Hovered()? COLOR_RED : COLOR_BLUE,
         .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
         .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER)}){
             if(Clay_Hovered() && input.isMouseReleased && characterDraftSelect != CHARACTER_NONE && characterDraftSelect != CHARACTER_LAST) current_page = PAGE_IN_GAME;
