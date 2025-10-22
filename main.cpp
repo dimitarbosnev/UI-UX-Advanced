@@ -7,12 +7,11 @@ uint32_t ACTIVE_RENDERER_INDEX = 0;
 
 const uint16_t FONT_ID_BARTLE = 0;
 const uint16_t FONT_ID_BOGLE = 1;
-
+const uint16_t FONT_ID_ROBOTO = 2;
 
 #define DEFAULT_SPACING 16
 #define DEFAULT_CORNER 10
 
-const Clay_Color COLOR_TRANSPERENT = (Clay_Color) {0, 0, 0, 0};
 const Clay_Color COLOR_LIGHT = (Clay_Color) {244, 235, 230, 255};
 const Clay_Color COLOR_LIGHT_HOVER = (Clay_Color) {200, 180, 180, 255};
 const Clay_Color COLOR_RED = (Clay_Color) {209, 52, 52, 255};
@@ -24,8 +23,9 @@ const Clay_LayoutConfig defaultLayoutConfig = (Clay_LayoutConfig) { .layoutDirec
 Clay_TextElementConfig titleTextConfig = (Clay_TextElementConfig) { .fontId = FONT_ID_BARTLE, .fontSize = 42, .textColor = COLOR_RED };
 Clay_TextElementConfig sideBarTextConfig = (Clay_TextElementConfig) { .fontId = FONT_ID_BOGLE, .fontSize = 36, .textColor = COLOR_LIGHT };
 Clay_TextElementConfig headerTextConfig = (Clay_TextElementConfig) { .fontId = FONT_ID_BARTLE, .fontSize = 36, .textColor = COLOR_LIGHT };
+Clay_TextElementConfig smallHeaderTextConfig = (Clay_TextElementConfig) { .fontId = FONT_ID_BARTLE, .fontSize = 30, .textColor = COLOR_LIGHT };
 Clay_TextElementConfig defaultTextConfig = (Clay_TextElementConfig) { .fontId = FONT_ID_BOGLE, .fontSize = 28, .textColor = COLOR_LIGHT };
-Clay_TextElementConfig smallTextConfig = (Clay_TextElementConfig) { .fontId = FONT_ID_BOGLE, .fontSize = 24, .textColor = COLOR_LIGHT_HOVER};
+Clay_TextElementConfig smallTextConfig = (Clay_TextElementConfig) { .fontId = FONT_ID_ROBOTO, .fontSize = 24, .textColor = COLOR_LIGHT_HOVER};
 
 typedef struct {
     void* memory;
@@ -156,6 +156,9 @@ typedef struct{
     Clay_String ability[4];
     Clay_String ability_name[4];
     Clay_String ability_info[4];
+    Clay_String lore;
+    Clay_String type;
+    Clay_String date;
 }CharInfo;
 
 typedef enum :int8_t{
@@ -200,7 +203,10 @@ CharInfo characters[CHARACTER_LAST] = {
             CLAY_STRING("Projectile attack that deals damage and inflicts Chill . Deals bonus damage to enemies already affected by Chill ."),
             CLAY_STRING("Soar gracefully to target location ."), 
             CLAY_STRING("Mark a path of frost in front of you. After a delay, the patch deals damage and inflicts Freeze to enemies hit, turning them into beautiful statues ."),
-        }
+        },
+        .lore = CLAY_STRING("From the frozen north comes the ice sculptor Alysia. Her power allows her to wield ice with both grace and deadly precision. She can damage and freeze her enemies from a distance, while shielding her allies with ice. Obsessed with shapes and form, she left her icy fortress of solitude to seek inspiration in the arena. "),
+        .type = CLAY_STRING("Mage"),
+        .date = CLAY_STRING("December 13th 2017")
     },
     {//1
         .name = CLAY_STRING("Ashka"),
@@ -223,7 +229,10 @@ CharInfo characters[CHARACTER_LAST] = {
             CLAY_STRING("Launch 3 Fire Storm projectiles . Each projectile deals damage and Ignites the enemy dealing damage over time ."),
             CLAY_STRING("Transform into fire and fly to target location dealing damage to nearby enemies ."), 
             CLAY_STRING("Transform into a fire elemental and dash forward dealing damage and Igniting enemies . Scorches the ground below you dealing damage while standing in it ."),
-        }
+        },
+        .lore = CLAY_STRING("A masked creature specialized in dark sorcery and pyro-kinetic powers. Casting devastating fire spells on his opponents, staying away from close combat. Don’t be fooled by his size, Ashka’s inner demon strikes fear into all who face him. "),
+        .type = CLAY_STRING("Mage"),
+        .date = CLAY_STRING("November 8th 2017")
     },
     {//2
         .name = CLAY_STRING("Bakko"),
@@ -246,7 +255,10 @@ CharInfo characters[CHARACTER_LAST] = {
             CLAY_STRING("Throw an axe that deals damage . Deals bonus damage for each weapon charge ."),
             CLAY_STRING("Leap into the air and strike down upon your enemies dealing damage and inflicting Snare ."), 
             CLAY_STRING("Rush forward and grab an enemy dealing damage and pushing it in front of you . Deals area damage and inflicts Stun when reaching max distance or when colliding with a wall or another enemy ."),
-        }
+        },
+        .lore = CLAY_STRING("Bakko has a proud history, filled with bravery and courage. Most known for saving hundreds of people from getting slaughtered by the giants in the north. A heroic brawler armed with axe and shield. Bakko uses his shield to outmaneuver opponents and protect his teammates. Watch out for his earth shattering dash attacks, even calm warriors sometimes go berserk. "),
+        .type = CLAY_STRING("Tank"),
+        .date = CLAY_STRING("November 8th 2017")
     },
     {//3
         .name = CLAY_STRING("Blossom"),
@@ -269,7 +281,10 @@ CharInfo characters[CHARACTER_LAST] = {
             CLAY_STRING("Summon the vitalizing powers of nature to heal nearest ally. Applies Butterflies, healing ally over time."),
             CLAY_STRING("Hop towards target location and avoid incoming attacks . Grants invisibility , increased movement speed and removes movement impairing effects upon landing . Invisibility fades when an ability is used ."), 
             CLAY_STRING("Launch into the air and unleash 3 waves of energy upon landing. Each wave deals damage and inflicts Weaken to enemies struck ."),
-        }
+        },
+        .lore = CLAY_STRING("Blossom is a happy, bubbly young faun from the Silverdeep Forest. She has left her home to investigate a disturbance in the natural order. She is always accompanied by her bird companion, Maxwell. "),
+        .type = CLAY_STRING("Support"),
+        .date = CLAY_STRING("June 27th 2017")
     },
     {//4
         .name = CLAY_STRING("Croak"),
@@ -292,7 +307,10 @@ CharInfo characters[CHARACTER_LAST] = {
             CLAY_STRING("Spit toxin muck at target location . Deals damage , inflicts Toxin healing you over time ."),
             CLAY_STRING("Leap attack and strike with your blades to deal damage in front of you . Can be recast ."), 
             CLAY_STRING("Dash forward in the shape of a venomous wind , piercing through enemies inflicting Venom , dealing massive damage after a duration ."),
-        }
+        },        
+        .lore = CLAY_STRING("His background is shrouded in mystery, his movements are supernatural and his reputation is whispered about. Croak loves to surprise his enemies, using his mobility to move in and out. His chameleonic stealth and flexible fighting style makes him exceptionally hard to catch. "),
+        .type = CLAY_STRING("Assasin"),
+        .date = CLAY_STRING("November 8th 2017")
     },
     {//5
         .name = CLAY_STRING("Destiny"),
@@ -315,7 +333,10 @@ CharInfo characters[CHARACTER_LAST] = {
             CLAY_STRING("Hold to charge a projectile to increase damage and distance over time . The projectile deals damage and inflicts Spell Block ."),
             CLAY_STRING("Compress yourself into an orb to dispel movement impairing effects and increase movement speed . Deals damage to the first enemy you hit and knocks them back ."), 
             CLAY_STRING("Compress yourself into an orb and dash forward at supersonic speed . Deals damage ande inflicts Stun to enemies hit . Bounces off walls up to a total of 3 times ."),
-        }
+        },
+        .lore = CLAY_STRING("An elite sky ranger from the secluded, invisible city of Enza. Many years of rigorous combat training using Magi-tech weaponry makes Destiny an agile and deadly force to be reckoned with. Fed up with the strict regulations of living in Enza, Destiny often escapes the city to blow off some steam and have fun in the arena. "),
+        .type = CLAY_STRING("Marksman"),
+        .date = CLAY_STRING("November 22th 2017")
     },
     {//6
         .name = CLAY_STRING("Ezmo"),
@@ -338,7 +359,10 @@ CharInfo characters[CHARACTER_LAST] = {
             CLAY_STRING("Hold to charge a projectile increasing damage and distance the longer it's charged. The projectile deals damage, knocks nearby enemies back and pulls enemies far away towards you."),
             CLAY_STRING("Turn into arcane energy, travel to target location and recharge Arcane Fire. Can be recasted."), 
             CLAY_STRING("Throw the Grimoire of Chaos to target location. The power of the grimoire draws nearby enemies towards it. It explodes after a duration dealing massive damage."),
-        }
+        },
+        .lore = CLAY_STRING("Ezmo was once imprisoned by the warlock, Aradu The Reserved, but managed to escape when his captor was too engrossed in reading his tome. Ezmo sealed Aradu's soul within the book, creating the Lost Soul Grimoire, and has carried it ever since. When he isn't playing tricks on people, Ezmo is searching for a way back to his home dimension. "),
+        .type = CLAY_STRING("Mage"),
+        .date = CLAY_STRING("October 11th 2016")
     },
     {//7
         .name = CLAY_STRING("Freya"),
@@ -361,7 +385,10 @@ CharInfo characters[CHARACTER_LAST] = {
             CLAY_STRING("Projectile attack that deals damage and inflicts Static, enemy is knocked back if already affected by Static. Knocking an enemy into a wall Incapacitates it."),
             CLAY_STRING("Leap towards target location and gain increased movement speed. Your next Bash deals bonus damage."), 
             CLAY_STRING("Leap high into the air striking down upon your enemies. Deals damage and inflicts Static. Deals bonus damage if the enemy is already affected by Static."),
-        }
+        },
+        .lore = CLAY_STRING("Once a tribe queen, now a fearless contender. Her titanic hammers and overwhelming power of lighting is the perfect recipe for destruction, slowing down her foes with thundering spells to catch them off guard."),
+        .type = CLAY_STRING("Fighter"),
+        .date = CLAY_STRING("November 8th 2017")
     },
     {//8
         .name = CLAY_STRING("Iva"),
@@ -384,7 +411,10 @@ CharInfo characters[CHARACTER_LAST] = {
             CLAY_STRING("Launch a rocket that deals damage on impact and area damage. The explosion Ignites enemies affected by Oil, taking damage over time."),
             CLAY_STRING("Fire up your Jet Pack and travel towards target location. Inflicts Oil on enemies below you."), 
             CLAY_STRING("Fire a series of piercing projectiles dealing damage."),
-        }
+        },
+        .lore = CLAY_STRING("A scavenger from the outer realms. Iva has engineered her own arsenal of weapons. Firing crazy rockets or unleashing a storm of bullets is her way of greeting her opponents in the Arena."),
+        .type = CLAY_STRING("Marksman"),
+        .date = CLAY_STRING("November 8th 2017")
     },
     {//9
         .name = CLAY_STRING("Jade"),
@@ -407,7 +437,10 @@ CharInfo characters[CHARACTER_LAST] = {
             CLAY_STRING("Fire a piercing bullet that deals damage and inflicts Stun."),
             CLAY_STRING("Detonate a grenade that launches you into the air. The explosion deals damage and inflicts Stun on nearby enemies."), 
             CLAY_STRING("Fire a series of explosive shells dealing damage and area damage around the impact."),
-        }
+        },
+        .lore = CLAY_STRING("A mysterious gunslinger with a score to settle. Born with eagle-eyes and armed with a lethal sniper rifle, Jade’s pinpoint accuracy is a serious threat for anyone who enters the arena. For close encounters she prefers a good old combination of stealth and homemade revolvers. The rumor says Jade joined the arena games to find the villain who killed her brother. Will she complete her dark quest of vengeance?"),
+        .type = CLAY_STRING("Marksman"),
+        .date = CLAY_STRING("November 8th 2017")
     },
     {//10
         .name = CLAY_STRING("Jamila"),
@@ -430,7 +463,10 @@ CharInfo characters[CHARACTER_LAST] = {
             CLAY_STRING("Throw a bouncing shuriken, dealing damage and inflicting Snare."),
             CLAY_STRING("Hold to charge a dash to increase damage and range. It deals damage and dashing in to a wall triggers a wall jump that inflicts Incapacitate."), 
             CLAY_STRING("Summon a phantom that dashes forward, dealing damage and stopping behind the first enemy hit. Upon arrival, it chases and strikes enemies in bursts."),
-        }
+        },
+        .lore = CLAY_STRING("A young assassin from the Shadowblade clan, Jamila suddenly found herself the new leader after the death of her mother, the previous matriarch. As the youngest leader in the clan’s history, some call her too inexperienced and undeserving of the title. Determined to silence those detractors, Jamila enters the arena to prove her mastery of the Shadow Arts. "),
+        .type = CLAY_STRING("Assasin"),
+        .date = CLAY_STRING("March 5th 2018")
     },
     {//11
         .name = CLAY_STRING("Jumong"),
@@ -453,7 +489,11 @@ CharInfo characters[CHARACTER_LAST] = {
             CLAY_STRING("Projectile attack that deals damage."),
             CLAY_STRING("Dash towards move direction and fire an arrow that deals damage."), 
             CLAY_STRING("Hold to charge an arrow to increase its damage and travel distance. The arrow deals damage and pulls the target hit with it. Pulling a target into an enemy or into a wall deals damage to the enemy hit and stuns both targets."),
-        }
+        },
+        .lore = CLAY_STRING("Jumong is a trophy collector who has wandered the wildlands in the pursuit of a worthy challenge. No longer content with hunting the great beasts of the world, has led him to enter the arena looking for a new type of prey. He traps his foes and ends them with a well placed shot from his mighty bow."),
+        .type = CLAY_STRING("Marksman"),
+        .date = CLAY_STRING("October 21th 2016")
+        
     },
     {//12
         .name = CLAY_STRING("Lucie"),
@@ -476,7 +516,10 @@ CharInfo characters[CHARACTER_LAST] = {
             CLAY_STRING("Throw a potion that heals the nearest ally for and applies Revitalize, healing Recharges faster for each nearby ally."),
             CLAY_STRING("Shield a target ally, absorbing damage."), 
             CLAY_STRING("Throw a vial of mixed chemicals to target location dealing impact damage and Snaring enemies. Covers the ground in a crippling goo that deals damage over a short duration."),
-        }
+        },
+        .lore = CLAY_STRING("Lucie is a highly skilled Alchemist. A rebel at school who got expelled from the Toleen Academy for mixing banned potions. She is a diverse contender who knows which brew makes you choke, heal or flee in fear. The arena has become her new playground for wild experiments. Seeing her smile while mixing ingredients of an unknown nature might make her look more crazy than cute."),
+        .type = CLAY_STRING("Support"),
+        .date = CLAY_STRING("November 8th 2017")
     },
     {//13
         .name = CLAY_STRING("Raigon"),
@@ -499,7 +542,10 @@ CharInfo characters[CHARACTER_LAST] = {
             CLAY_STRING("Dash forward and strike to deal damage and leech health. Deals bonus damage and leeches bonus health per weapon charge."),
             CLAY_STRING("Leap and strike with your sword to deal damage in front of you upon landing."), 
             CLAY_STRING("Dash and strike an enemy, dealing damage. Upon hit, slash all enemies in an area around you, dealing damage over time. When the duration ends or upon recast, dash towards your aim direction."),
-        }
+        },
+        .lore = CLAY_STRING("Raigon is the former crown prince of Quna. He was a well-respected figure among the kingdom's warriors, until he was exiled due to the manipulations of Pestilus. For now, the arena serves as a decent place to find work and set the wheels in motion for his retaliation."),
+        .type = CLAY_STRING("Fighter"),
+        .date = CLAY_STRING("Feburary 15th 2017")
     },
     {//14
         .name = CLAY_STRING("Sirius"),
@@ -522,7 +568,10 @@ CharInfo characters[CHARACTER_LAST] = {
             CLAY_STRING("Call down a beam of sunlight that heals the nearest ally. Recharges faster for each nearby ally."),
             CLAY_STRING("Teleport to the target location dealing damage to nearby enemies and healing nearby allies."), 
             CLAY_STRING("Channel a beam of light that deals damage to enemies, heals allies, and heals self for."),
-        }
+        },
+        .lore = CLAY_STRING("Born under a purple sky and wrapped in the light of the brightest star, the prophecy was true and foretold the birth of the Zenith. Taken from his parents and sent to a monastery to learn the the way of the astronomers, Sirius is a calm prodigy who uses the energies of stars and planets as destructive spells and healing powers."),
+        .type = CLAY_STRING("Support"),
+        .date = CLAY_STRING("November 8th 2017")
     },
 };
 
@@ -592,14 +641,14 @@ void SideBar(){
 
 void MainLayout(){
     CLAY(CLAY_ID("ContentContainer"), { .layout = {.sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }}}){
-        CLAY(CLAY_ID("MISSIONS"), { .backgroundColor = COLOR_BLUE, .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER), 
+        CLAY(CLAY_ID("MISSIONS"), { .backgroundColor = COLOR_BLUE, .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER), .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
         .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIXED(500), CLAY_SIZING_FIXED(400) }, .childGap = DEFAULT_SPACING, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING) }, 
         .floating = { .attachTo = CLAY_ATTACH_TO_PARENT, .attachPoints = { CLAY_ATTACH_POINT_LEFT_BOTTOM, CLAY_ATTACH_POINT_LEFT_BOTTOM}}}){
-            CLAY_TEXT(CLAY_STRING("Missions"), &headerTextConfig);
+            CLAY_TEXT(CLAY_STRING("Missions"), &smallHeaderTextConfig);
+            CLAY_AUTO_ID({.border = { .width = {0, 0, 2, 2}, .color = COLOR_LIGHT },.cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER),
+            .layout  = { .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_FIT(0)}}});
             CLAY_AUTO_ID({
                 .layout = defaultLayoutConfig,
-                .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
-                .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER),
             }) {
                 CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { .width = CLAY_SIZING_GROW(0) }}}){
                     CLAY_TEXT(CLAY_STRING("First Win of the Day"), &defaultTextConfig);
@@ -678,6 +727,47 @@ void CharactersContainer(){
         }
     }
 }
+typedef enum : uint8_t{
+    CHAMPION_INFO_ABILITES,
+    CHAMPION_INFO_MORE,
+}ChampiontInfo;
+
+ChampiontInfo infoPage;
+
+void DisplayCharAbilites(CharInfo& character){
+    for(int i = 0; i < 4; i++){
+        CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(.max = 700), CLAY_SIZING_FIT(0) }, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING), .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_CENTER}},
+        .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT }, .cornerRadius = CLAY_CORNER_RADIUS(25), .backgroundColor = COLOR_BLUE}){
+            CLAY_AUTO_ID({ .image = { .imageData = &character.ability[i]}, .layout = {.sizing = { CLAY_SIZING_FIXED(128), CLAY_SIZING_FIXED(128) }}});
+            CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, 
+            .padding = CLAY_PADDING_ALL(DEFAULT_SPACING), .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_TOP}}}){
+                CLAY_TEXT(character.ability_name[i], &sideBarTextConfig);
+                CLAY_TEXT(character.ability_info[i], &smallTextConfig);
+            }
+        }
+    }
+}
+
+void DisplayCharLore(CharInfo& character){
+    CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(.max = 700), CLAY_SIZING_FIT(0) }, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING), .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_CENTER}},
+    .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT }, .cornerRadius = CLAY_CORNER_RADIUS(25), .backgroundColor = COLOR_BLUE}){
+        CLAY_TEXT(CLAY_STRING("Lore"), &sideBarTextConfig);
+        CLAY_TEXT(character.lore, &smallTextConfig);
+    }
+    CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(.max = 700), CLAY_SIZING_FIT(0) }, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING), .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_CENTER}},
+    .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT }, .cornerRadius = CLAY_CORNER_RADIUS(25), .backgroundColor = COLOR_BLUE}){
+        CLAY_TEXT(CLAY_STRING("Role:  "), &sideBarTextConfig);
+        CLAY_TEXT(character.type, &sideBarTextConfig);
+        CLAY_TEXT(CLAY_STRING("     Health:  220"), &sideBarTextConfig);
+    }
+
+    CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(.max = 700), CLAY_SIZING_FIT(0) }, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING), .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_CENTER}},
+    .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT }, .cornerRadius = CLAY_CORNER_RADIUS(25), .backgroundColor = COLOR_BLUE}){
+        CLAY_TEXT(CLAY_STRING("Server Winrate:  50%"), &sideBarTextConfig);
+        CLAY_TEXT(CLAY_STRING("     Release:  "), &sideBarTextConfig);
+        CLAY_TEXT(character.date, &sideBarTextConfig);
+    }
+}
 
 
 void CharacterInfo(CharInfo& character){
@@ -695,31 +785,47 @@ void CharacterInfo(CharInfo& character){
             .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
             .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER),
             }) {
-                if(Clay_Hovered() && input.isMouseReleased) characterInfoSelect = CHARACTER_NONE;
+                if(Clay_Hovered() && input.isMouseReleased) 
+                {
+                    infoPage = CHAMPION_INFO_ABILITES;
+                    characterInfoSelect = CHARACTER_NONE;
+                }
                 CLAY_TEXT(CLAY_STRING("Back"), &sideBarTextConfig);
             }
         }
-        CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER}}}){
+        CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_PERCENT(0.55f), CLAY_SIZING_GROW(0) }, .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER}}}){
             CLAY(CLAY_ID("IMAGE"), { .image = { .imageData = &character.image}, .aspectRatio = {800.0f/666.0f},
             .layout = {.sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }}});
         }
-        CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING, .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_CENTER}}}){
-            CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(.max = 700), CLAY_SIZING_FIT(0) }, .childGap = DEFAULT_SPACING, .childAlignment = { .x = CLAY_ALIGN_X_RIGHT, .y = CLAY_ALIGN_Y_CENTER}}}){
-                CLAY_TEXT(CLAY_STRING("ABILITES"), &headerTextConfig);
-            }
-            for(int i = 0; i < 4; i++){
-                CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(.max = 700), CLAY_SIZING_FIT(0) }, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING), .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_CENTER}},
-                .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT }, .cornerRadius = CLAY_CORNER_RADIUS(25)}){
-                    CLAY_AUTO_ID({ .image = { .imageData = &character.ability[i]},
-                    .layout = {.sizing = { CLAY_SIZING_FIXED(128), CLAY_SIZING_FIXED(128) }}});
-                    CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, 
-                    .padding = CLAY_PADDING_ALL(DEFAULT_SPACING), .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_TOP}}}){
-                        CLAY_TEXT(character.ability_name[i], &sideBarTextConfig);
-                        CLAY_TEXT(character.ability_info[i], 
-                        &smallTextConfig);
-                    }
+        CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_GROW(0) }, .padding = {DEFAULT_SPACING, DEFAULT_SPACING, 50, DEFAULT_SPACING}, .childGap = DEFAULT_SPACING, .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_TOP}}}){
+            CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(.max = 700), CLAY_SIZING_FIT(0) }, .childGap = DEFAULT_SPACING, .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_CENTER}}}){
+                CLAY_AUTO_ID({
+                .layout = { .padding = {16, 16, 6, 6} },
+                }) {
+                    if(Clay_Hovered() && input.isMouseReleased){
+                        mainpage_index = rand() % length(mainpage_wallpapers);
+                        infoPage = CHAMPION_INFO_ABILITES;
+                    } 
+                    CLAY_TEXT(CLAY_STRING("Abilites"), CLAY_TEXT_CONFIG({ .fontId = FONT_ID_BARTLE, .fontSize = 24, 
+                    .textColor = Clay_Hovered()? COLOR_RED : infoPage == CHAMPION_INFO_ABILITES? COLOR_RED_HOVER : COLOR_LIGHT, .userData = FrameAllocateCustomData((CustomHTMLData) { .disablePointerEvents = true }) }));
+                }
+                CLAY_AUTO_ID({
+                .layout = { .padding = {16, 16, 6, 6} },
+                }) {
+                    if(Clay_Hovered() && input.isMouseReleased){
+                        mainpage_index = rand() % length(mainpage_wallpapers);
+                        infoPage = CHAMPION_INFO_MORE;
+                    } 
+                    CLAY_TEXT(CLAY_STRING("More"), CLAY_TEXT_CONFIG({ .fontId = FONT_ID_BARTLE, .fontSize = 24, 
+                    .textColor = Clay_Hovered()? COLOR_RED : infoPage == CHAMPION_INFO_MORE? COLOR_RED_HOVER : COLOR_LIGHT, .userData = FrameAllocateCustomData((CustomHTMLData) { .disablePointerEvents = true }) }));
                 }
             }
+            switch (infoPage)
+            {
+                case CHAMPION_INFO_ABILITES: DisplayCharAbilites(character); break;
+                case CHAMPION_INFO_MORE: DisplayCharLore(character); break;
+            }
+     
         }
     }
 }

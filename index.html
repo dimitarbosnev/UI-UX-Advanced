@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link href="https://fonts.googleapis.com/css2?family=BBH+Sans+Bartle&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=BBH+Sans+Bogle&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,800;1,800&display=swap" rel="stylesheet">
     <style>
         html, body {
             width: 100%;
@@ -21,14 +22,20 @@
             font-family: "BBH Sans Bartle", sans-serif;
             font-style: normal;
             font-weight: 400;
-            src: url("https://fonts.googleapis.com/css2?family=BBH+Sans+Bartle&display=swap") format('truetype');
+            src: format('truetype');
         }
 
         @font-face {
             font-family: "BBH Sans Bogle", sans-serif;
             font-style: normal;
             font-weight: 400;
-            src: url("https://fonts.googleapis.com/css2?family=BBH+Sans+Bogle&display=swap") format('truetype');
+            src: format('truetype');
+        }
+        @font-face {
+            font-family: 'Roboto';
+            font-style: normal;
+            font-weight: 800;
+            src: format('truetype');
         }
 
         body > canvas {
@@ -79,6 +86,7 @@
     let fontsById = [
         'BBH Sans Bartle',
         'BBH Sans Bogle',
+        'Roboto',
     ];
     let elementCache = {};
     let imageCache = {};
