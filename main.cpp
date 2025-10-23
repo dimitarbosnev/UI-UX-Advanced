@@ -12,18 +12,20 @@ const uint16_t FONT_ID_ROBOTO = 2;
 #define DEFAULT_SPACING 16
 #define DEFAULT_CORNER 10
 
+const Clay_Color COLOR_GREY = (Clay_Color) {50, 50, 50, 255};
 const Clay_Color COLOR_LIGHT = (Clay_Color) {244, 235, 230, 255};
 const Clay_Color COLOR_LIGHT_HOVER = (Clay_Color) {200, 180, 180, 255};
 const Clay_Color COLOR_RED = (Clay_Color) {209, 52, 52, 255};
 const Clay_Color COLOR_RED_HOVER = (Clay_Color) {125, 35, 35, 255};
 const Clay_Color COLOR_BLUE = (Clay_Color) {20, 56, 115, 230};
+const Clay_Color COLOR_YELLOW = (Clay_Color) {224, 176, 0, 255};
 
 const Clay_LayoutConfig defaultLayoutConfig = (Clay_LayoutConfig) { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING) };
 
 Clay_TextElementConfig titleTextConfig = (Clay_TextElementConfig) { .fontId = FONT_ID_BARTLE, .fontSize = 42, .textColor = COLOR_RED };
 Clay_TextElementConfig sideBarTextConfig = (Clay_TextElementConfig) { .fontId = FONT_ID_BOGLE, .fontSize = 36, .textColor = COLOR_LIGHT };
 Clay_TextElementConfig headerTextConfig = (Clay_TextElementConfig) { .fontId = FONT_ID_BARTLE, .fontSize = 36, .textColor = COLOR_LIGHT };
-Clay_TextElementConfig smallHeaderTextConfig = (Clay_TextElementConfig) { .fontId = FONT_ID_BARTLE, .fontSize = 30, .textColor = COLOR_LIGHT };
+Clay_TextElementConfig smallHeaderTextConfig = (Clay_TextElementConfig) { .fontId = FONT_ID_BARTLE, .fontSize = 30, .textColor = COLOR_LIGHT, .textAlignment = CLAY_TEXT_ALIGN_CENTER };
 Clay_TextElementConfig defaultTextConfig = (Clay_TextElementConfig) { .fontId = FONT_ID_BOGLE, .fontSize = 28, .textColor = COLOR_LIGHT };
 Clay_TextElementConfig smallTextConfig = (Clay_TextElementConfig) { .fontId = FONT_ID_ROBOTO, .fontSize = 24, .textColor = COLOR_LIGHT_HOVER};
 
@@ -206,7 +208,7 @@ CharInfo characters[CHARACTER_LAST] = {
         },
         .lore = CLAY_STRING("From the frozen north comes the ice sculptor Alysia. Her power allows her to wield ice with both grace and deadly precision. She can damage and freeze her enemies from a distance, while shielding her allies with ice. Obsessed with shapes and form, she left her icy fortress of solitude to seek inspiration in the arena. "),
         .type = CLAY_STRING("Mage"),
-        .date = CLAY_STRING("December 13th 2017")
+        .date = CLAY_STRING("13/12/2017")
     },
     {//1
         .name = CLAY_STRING("Ashka"),
@@ -232,7 +234,7 @@ CharInfo characters[CHARACTER_LAST] = {
         },
         .lore = CLAY_STRING("A masked creature specialized in dark sorcery and pyro-kinetic powers. Casting devastating fire spells on his opponents, staying away from close combat. Don’t be fooled by his size, Ashka’s inner demon strikes fear into all who face him. "),
         .type = CLAY_STRING("Mage"),
-        .date = CLAY_STRING("November 8th 2017")
+        .date = CLAY_STRING("8/11/2017")
     },
     {//2
         .name = CLAY_STRING("Bakko"),
@@ -258,7 +260,7 @@ CharInfo characters[CHARACTER_LAST] = {
         },
         .lore = CLAY_STRING("Bakko has a proud history, filled with bravery and courage. Most known for saving hundreds of people from getting slaughtered by the giants in the north. A heroic brawler armed with axe and shield. Bakko uses his shield to outmaneuver opponents and protect his teammates. Watch out for his earth shattering dash attacks, even calm warriors sometimes go berserk. "),
         .type = CLAY_STRING("Tank"),
-        .date = CLAY_STRING("November 8th 2017")
+        .date = CLAY_STRING("8/11/2017")
     },
     {//3
         .name = CLAY_STRING("Blossom"),
@@ -284,7 +286,7 @@ CharInfo characters[CHARACTER_LAST] = {
         },
         .lore = CLAY_STRING("Blossom is a happy, bubbly young faun from the Silverdeep Forest. She has left her home to investigate a disturbance in the natural order. She is always accompanied by her bird companion, Maxwell. "),
         .type = CLAY_STRING("Support"),
-        .date = CLAY_STRING("June 27th 2017")
+        .date = CLAY_STRING("27/6/2017")
     },
     {//4
         .name = CLAY_STRING("Croak"),
@@ -310,7 +312,7 @@ CharInfo characters[CHARACTER_LAST] = {
         },        
         .lore = CLAY_STRING("His background is shrouded in mystery, his movements are supernatural and his reputation is whispered about. Croak loves to surprise his enemies, using his mobility to move in and out. His chameleonic stealth and flexible fighting style makes him exceptionally hard to catch. "),
         .type = CLAY_STRING("Assasin"),
-        .date = CLAY_STRING("November 8th 2017")
+        .date = CLAY_STRING("8/11/2017")
     },
     {//5
         .name = CLAY_STRING("Destiny"),
@@ -336,7 +338,7 @@ CharInfo characters[CHARACTER_LAST] = {
         },
         .lore = CLAY_STRING("An elite sky ranger from the secluded, invisible city of Enza. Many years of rigorous combat training using Magi-tech weaponry makes Destiny an agile and deadly force to be reckoned with. Fed up with the strict regulations of living in Enza, Destiny often escapes the city to blow off some steam and have fun in the arena. "),
         .type = CLAY_STRING("Marksman"),
-        .date = CLAY_STRING("November 22th 2017")
+        .date = CLAY_STRING("22/11/2017")
     },
     {//6
         .name = CLAY_STRING("Ezmo"),
@@ -362,7 +364,7 @@ CharInfo characters[CHARACTER_LAST] = {
         },
         .lore = CLAY_STRING("Ezmo was once imprisoned by the warlock, Aradu The Reserved, but managed to escape when his captor was too engrossed in reading his tome. Ezmo sealed Aradu's soul within the book, creating the Lost Soul Grimoire, and has carried it ever since. When he isn't playing tricks on people, Ezmo is searching for a way back to his home dimension. "),
         .type = CLAY_STRING("Mage"),
-        .date = CLAY_STRING("October 11th 2016")
+        .date = CLAY_STRING("11/10/2016")
     },
     {//7
         .name = CLAY_STRING("Freya"),
@@ -388,7 +390,7 @@ CharInfo characters[CHARACTER_LAST] = {
         },
         .lore = CLAY_STRING("Once a tribe queen, now a fearless contender. Her titanic hammers and overwhelming power of lighting is the perfect recipe for destruction, slowing down her foes with thundering spells to catch them off guard."),
         .type = CLAY_STRING("Fighter"),
-        .date = CLAY_STRING("November 8th 2017")
+        .date = CLAY_STRING("8/11/2017")
     },
     {//8
         .name = CLAY_STRING("Iva"),
@@ -414,7 +416,7 @@ CharInfo characters[CHARACTER_LAST] = {
         },
         .lore = CLAY_STRING("A scavenger from the outer realms. Iva has engineered her own arsenal of weapons. Firing crazy rockets or unleashing a storm of bullets is her way of greeting her opponents in the Arena."),
         .type = CLAY_STRING("Marksman"),
-        .date = CLAY_STRING("November 8th 2017")
+        .date = CLAY_STRING("8/11/2017")
     },
     {//9
         .name = CLAY_STRING("Jade"),
@@ -440,7 +442,7 @@ CharInfo characters[CHARACTER_LAST] = {
         },
         .lore = CLAY_STRING("A mysterious gunslinger with a score to settle. Born with eagle-eyes and armed with a lethal sniper rifle, Jade’s pinpoint accuracy is a serious threat for anyone who enters the arena. For close encounters she prefers a good old combination of stealth and homemade revolvers. The rumor says Jade joined the arena games to find the villain who killed her brother. Will she complete her dark quest of vengeance?"),
         .type = CLAY_STRING("Marksman"),
-        .date = CLAY_STRING("November 8th 2017")
+        .date = CLAY_STRING("8/11/2017")
     },
     {//10
         .name = CLAY_STRING("Jamila"),
@@ -466,7 +468,7 @@ CharInfo characters[CHARACTER_LAST] = {
         },
         .lore = CLAY_STRING("A young assassin from the Shadowblade clan, Jamila suddenly found herself the new leader after the death of her mother, the previous matriarch. As the youngest leader in the clan’s history, some call her too inexperienced and undeserving of the title. Determined to silence those detractors, Jamila enters the arena to prove her mastery of the Shadow Arts. "),
         .type = CLAY_STRING("Assasin"),
-        .date = CLAY_STRING("March 5th 2018")
+        .date = CLAY_STRING("5/3/2018")
     },
     {//11
         .name = CLAY_STRING("Jumong"),
@@ -492,7 +494,7 @@ CharInfo characters[CHARACTER_LAST] = {
         },
         .lore = CLAY_STRING("Jumong is a trophy collector who has wandered the wildlands in the pursuit of a worthy challenge. No longer content with hunting the great beasts of the world, has led him to enter the arena looking for a new type of prey. He traps his foes and ends them with a well placed shot from his mighty bow."),
         .type = CLAY_STRING("Marksman"),
-        .date = CLAY_STRING("October 21th 2016")
+        .date = CLAY_STRING("21/10/2016")
         
     },
     {//12
@@ -519,7 +521,7 @@ CharInfo characters[CHARACTER_LAST] = {
         },
         .lore = CLAY_STRING("Lucie is a highly skilled Alchemist. A rebel at school who got expelled from the Toleen Academy for mixing banned potions. She is a diverse contender who knows which brew makes you choke, heal or flee in fear. The arena has become her new playground for wild experiments. Seeing her smile while mixing ingredients of an unknown nature might make her look more crazy than cute."),
         .type = CLAY_STRING("Support"),
-        .date = CLAY_STRING("November 8th 2017")
+        .date = CLAY_STRING("8/11/2017")
     },
     {//13
         .name = CLAY_STRING("Raigon"),
@@ -545,7 +547,7 @@ CharInfo characters[CHARACTER_LAST] = {
         },
         .lore = CLAY_STRING("Raigon is the former crown prince of Quna. He was a well-respected figure among the kingdom's warriors, until he was exiled due to the manipulations of Pestilus. For now, the arena serves as a decent place to find work and set the wheels in motion for his retaliation."),
         .type = CLAY_STRING("Fighter"),
-        .date = CLAY_STRING("Feburary 15th 2017")
+        .date = CLAY_STRING("15/2/2017")
     },
     {//14
         .name = CLAY_STRING("Sirius"),
@@ -571,7 +573,7 @@ CharInfo characters[CHARACTER_LAST] = {
         },
         .lore = CLAY_STRING("Born under a purple sky and wrapped in the light of the brightest star, the prophecy was true and foretold the birth of the Zenith. Taken from his parents and sent to a monastery to learn the the way of the astronomers, Sirius is a calm prodigy who uses the energies of stars and planets as destructive spells and healing powers."),
         .type = CLAY_STRING("Support"),
-        .date = CLAY_STRING("November 8th 2017")
+        .date = CLAY_STRING("8/11/2017")
     },
 };
 
@@ -633,7 +635,7 @@ void SideBar(){
             .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER)
         }) {
             if(Clay_Hovered() && input.isMouseReleased) current_page = PAGE_CHARACTER_DRAFT;
-            CLAY_TEXT(CLAY_STRING("Battle"), &sideBarTextConfig);
+            CLAY_TEXT(CLAY_STRING("Play"), &sideBarTextConfig);
         }
         CLAY(CLAY_ID("Spacer_BOT"), { .layout = { .sizing = { .height = CLAY_SIZING_GROW(0) } } });
     }
@@ -683,89 +685,50 @@ void MainLayout(){
 
 void CharactersContainer(){
     CLAY(CLAY_ID("CharactersContainer"), { .layout =  { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING, .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_TOP}, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING) }}){
-        int collumns = 7;
-        int rows = CHARACTER_LAST/collumns;
-        for(int i = 0; i < rows; i++){
-            CLAY_AUTO_ID({ .layout =  { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_FIT(0) }, .childGap = DEFAULT_SPACING, }}){
-                for(int y = i*collumns; y < collumns * (i+1); y++){
-                    CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }}}){
-                        bool hovered = Clay_Hovered();
-                        if(hovered && input.isMouseReleased){
-                            characterInfoSelect = (Characters)y;
-                        }
-                        CLAY_AUTO_ID({ .image = { .imageData = &characters[y].icon},
-                        .layout = {.sizing = { CLAY_SIZING_FIXED(220), CLAY_SIZING_FIXED(120) }},
-                        .border = { .width = { 2,2,2,2}, .color = hovered? COLOR_RED : COLOR_LIGHT}});
-                        CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }}}){
-                            CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } } });
-                            CLAY_TEXT(characters[y].name, CLAY_TEXT_CONFIG({ .fontId = FONT_ID_BOGLE, .fontSize = 36, 
-                            .textColor =  hovered? COLOR_RED : COLOR_LIGHT, .userData = FrameAllocateCustomData((CustomHTMLData) { .disablePointerEvents = true }) }));
-                            CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } } });
+        CLAY(CLAY_ID("CharactersContainer2"), { .layout =  { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING, .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_TOP}, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING) }}){
+            int collumns = (windowWidth*0.88f)/240;
+            int rows = CHARACTER_LAST/collumns;
+            for(int i = 0; i < rows; i++){
+                CLAY_AUTO_ID({ .layout =  { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_FIT(0) }, .childGap = DEFAULT_SPACING}}){
+                    for(int y = i*collumns; y < collumns * (i+1); y++){
+                        CLAY_AUTO_ID({ .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }}}){
+                            bool hovered = Clay_Hovered();
+                            if(hovered && input.isMouseReleased){
+                                characterInfoSelect = (Characters)y;
+                            }
+                            CLAY_AUTO_ID({ .image = { .imageData = &characters[y].icon},
+                            .layout = {.sizing = { CLAY_SIZING_FIXED(220),CLAY_SIZING_FIXED(120)}},
+                            .border = { .width = { 2,2,2,2}, .color = hovered? COLOR_RED : COLOR_LIGHT}});
+                            CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }}}){
+                                CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } } });
+                                CLAY_TEXT(characters[y].name, CLAY_TEXT_CONFIG({ .fontId = FONT_ID_BOGLE, .fontSize = 36, 
+                                .textColor =  hovered? COLOR_RED : COLOR_LIGHT, .userData = FrameAllocateCustomData((CustomHTMLData) { .disablePointerEvents = true }) }));
+                                CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } } });
+                            }
                         }
                     }
                 }
             }
-        }
-        CLAY_AUTO_ID({ .layout =  { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_FIT(0) }, .childGap = DEFAULT_SPACING, }}){
-            for(int i = collumns*rows; i < CHARACTER_LAST; i++){
-                CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }}}){
-                    bool hovered = Clay_Hovered();
-                    if(hovered && input.isMouseReleased){
-                        characterInfoSelect = (Characters)i;
-                    }
-                    CLAY_AUTO_ID({ .image = { .imageData = &characters[i].icon},
-                    .layout = {.sizing = { CLAY_SIZING_FIXED(220), CLAY_SIZING_FIXED(120) }},
-                    .border = { .width = { 2,2,2,2}, .color = hovered? COLOR_RED : COLOR_LIGHT}});
-                    CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }}}){
-                        CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } } });
-                        CLAY_TEXT(characters[i].name, CLAY_TEXT_CONFIG({ .fontId = FONT_ID_BOGLE, .fontSize = 36, 
-                        .textColor =  hovered? COLOR_RED : COLOR_LIGHT, .userData = FrameAllocateCustomData((CustomHTMLData) { .disablePointerEvents = true }) }));
-                        CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } } });
-                    }
+            CLAY_AUTO_ID({ .layout =  { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_FIT(0) }, .childGap = DEFAULT_SPACING}}){
+                for(int i = collumns*rows; i < CHARACTER_LAST; i++){
+                    CLAY_AUTO_ID({ .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }}}){
+                            bool hovered = Clay_Hovered();
+                            if(hovered && input.isMouseReleased){
+                                characterInfoSelect = (Characters)i;
+                            }
+                            CLAY_AUTO_ID({ .image = { .imageData = &characters[i].icon},
+                            .layout = {.sizing = { CLAY_SIZING_FIXED(220),CLAY_SIZING_FIXED(120)}},
+                            .border = { .width = { 2,2,2,2}, .color = hovered? COLOR_RED : COLOR_LIGHT}});
+                            CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }}}){
+                                CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } } });
+                                CLAY_TEXT(characters[i].name, CLAY_TEXT_CONFIG({ .fontId = FONT_ID_BOGLE, .fontSize = 36, 
+                                .textColor =  hovered? COLOR_RED : COLOR_LIGHT, .userData = FrameAllocateCustomData((CustomHTMLData) { .disablePointerEvents = true }) }));
+                                CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } } });
+                            }
+                        }
                 }
             }
         }
-    }
-}
-typedef enum : uint8_t{
-    CHAMPION_INFO_ABILITES,
-    CHAMPION_INFO_MORE,
-}ChampiontInfo;
-
-ChampiontInfo infoPage;
-
-void DisplayCharAbilites(CharInfo& character){
-    for(int i = 0; i < 4; i++){
-        CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(.max = 700), CLAY_SIZING_FIT(0) }, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING), .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_CENTER}},
-        .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT }, .cornerRadius = CLAY_CORNER_RADIUS(25), .backgroundColor = COLOR_BLUE}){
-            CLAY_AUTO_ID({ .image = { .imageData = &character.ability[i]}, .layout = {.sizing = { CLAY_SIZING_FIXED(128), CLAY_SIZING_FIXED(128) }}});
-            CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, 
-            .padding = CLAY_PADDING_ALL(DEFAULT_SPACING), .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_TOP}}}){
-                CLAY_TEXT(character.ability_name[i], &sideBarTextConfig);
-                CLAY_TEXT(character.ability_info[i], &smallTextConfig);
-            }
-        }
-    }
-}
-
-void DisplayCharLore(CharInfo& character){
-    CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(.max = 700), CLAY_SIZING_FIT(0) }, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING), .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_CENTER}},
-    .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT }, .cornerRadius = CLAY_CORNER_RADIUS(25), .backgroundColor = COLOR_BLUE}){
-        CLAY_TEXT(CLAY_STRING("Lore"), &sideBarTextConfig);
-        CLAY_TEXT(character.lore, &smallTextConfig);
-    }
-    CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(.max = 700), CLAY_SIZING_FIT(0) }, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING), .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_CENTER}},
-    .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT }, .cornerRadius = CLAY_CORNER_RADIUS(25), .backgroundColor = COLOR_BLUE}){
-        CLAY_TEXT(CLAY_STRING("Role:  "), &sideBarTextConfig);
-        CLAY_TEXT(character.type, &sideBarTextConfig);
-        CLAY_TEXT(CLAY_STRING("     Health:  220"), &sideBarTextConfig);
-    }
-
-    CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(.max = 700), CLAY_SIZING_FIT(0) }, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING), .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_CENTER}},
-    .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT }, .cornerRadius = CLAY_CORNER_RADIUS(25), .backgroundColor = COLOR_BLUE}){
-        CLAY_TEXT(CLAY_STRING("Server Winrate:  50%"), &sideBarTextConfig);
-        CLAY_TEXT(CLAY_STRING("     Release:  "), &sideBarTextConfig);
-        CLAY_TEXT(character.date, &sideBarTextConfig);
     }
 }
 
@@ -787,45 +750,39 @@ void CharacterInfo(CharInfo& character){
             }) {
                 if(Clay_Hovered() && input.isMouseReleased) 
                 {
-                    infoPage = CHAMPION_INFO_ABILITES;
                     characterInfoSelect = CHARACTER_NONE;
                 }
                 CLAY_TEXT(CLAY_STRING("Back"), &sideBarTextConfig);
             }
         }
         CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_PERCENT(0.55f), CLAY_SIZING_GROW(0) }, .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER}}}){
-            CLAY(CLAY_ID("IMAGE"), { .image = { .imageData = &character.image}, .aspectRatio = {800.0f/666.0f},
+            CLAY(CLAY_ID("IMAGE"), { .image = { .imageData = &character.image}, .aspectRatio = {670.0f/666.0f},
             .layout = {.sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }}});
         }
-        CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_GROW(0) }, .padding = {DEFAULT_SPACING, DEFAULT_SPACING, 50, DEFAULT_SPACING}, .childGap = DEFAULT_SPACING, .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_TOP}}}){
-            CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(.max = 700), CLAY_SIZING_FIT(0) }, .childGap = DEFAULT_SPACING, .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_CENTER}}}){
-                CLAY_AUTO_ID({
-                .layout = { .padding = {16, 16, 6, 6} },
-                }) {
-                    if(Clay_Hovered() && input.isMouseReleased){
-                        mainpage_index = rand() % length(mainpage_wallpapers);
-                        infoPage = CHAMPION_INFO_ABILITES;
-                    } 
-                    CLAY_TEXT(CLAY_STRING("Abilites"), CLAY_TEXT_CONFIG({ .fontId = FONT_ID_BARTLE, .fontSize = 24, 
-                    .textColor = Clay_Hovered()? COLOR_RED : infoPage == CHAMPION_INFO_ABILITES? COLOR_RED_HOVER : COLOR_LIGHT, .userData = FrameAllocateCustomData((CustomHTMLData) { .disablePointerEvents = true }) }));
-                }
-                CLAY_AUTO_ID({
-                .layout = { .padding = {16, 16, 6, 6} },
-                }) {
-                    if(Clay_Hovered() && input.isMouseReleased){
-                        mainpage_index = rand() % length(mainpage_wallpapers);
-                        infoPage = CHAMPION_INFO_MORE;
-                    } 
-                    CLAY_TEXT(CLAY_STRING("More"), CLAY_TEXT_CONFIG({ .fontId = FONT_ID_BARTLE, .fontSize = 24, 
-                    .textColor = Clay_Hovered()? COLOR_RED : infoPage == CHAMPION_INFO_MORE? COLOR_RED_HOVER : COLOR_LIGHT, .userData = FrameAllocateCustomData((CustomHTMLData) { .disablePointerEvents = true }) }));
+        CLAY_AUTO_ID({.clip{false, true}, .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_GROW(0) }, .padding = {0, DEFAULT_SPACING*2, 40, 0}, .childGap = DEFAULT_SPACING, .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_TOP}}}){
+            CLAY_TEXT(CLAY_STRING("      Lore"), &sideBarTextConfig);
+            CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_FIT(0) }, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING), .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_CENTER}},
+            .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT }, .cornerRadius = CLAY_CORNER_RADIUS(25), .backgroundColor = COLOR_BLUE}){
+                CLAY_TEXT(character.lore, &smallTextConfig);
+            }
+            CLAY_TEXT(CLAY_STRING("      Abilites"), &sideBarTextConfig);
+            for(int i = 0; i < 4; i++){
+                CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_FIT(0) }, .padding = {DEFAULT_SPACING, DEFAULT_SPACING, 8, 8}, .childGap = DEFAULT_SPACING, .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_CENTER}},
+                .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT }, .cornerRadius = CLAY_CORNER_RADIUS(25), .backgroundColor = COLOR_BLUE}){
+                    CLAY_AUTO_ID({ .image = { .imageData = &character.ability[i]}, .layout = {.sizing = { CLAY_SIZING_FIXED(64), CLAY_SIZING_FIXED(64) }}});
+                    CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_TOP}}}){
+                        CLAY_TEXT(character.ability_name[i], &sideBarTextConfig);
+                        CLAY_TEXT(character.ability_info[i], &smallTextConfig);
+                    }
                 }
             }
-            switch (infoPage)
-            {
-                case CHAMPION_INFO_ABILITES: DisplayCharAbilites(character); break;
-                case CHAMPION_INFO_MORE: DisplayCharLore(character); break;
+            CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(.max = 700), CLAY_SIZING_FIT(0) }, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING), .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_CENTER}}}){
+                CLAY_TEXT(CLAY_STRING("      Role:  "), &sideBarTextConfig);
+                CLAY_TEXT(character.type, &sideBarTextConfig);
+                CLAY_AUTO_ID({.layout = {.sizing = { .width = CLAY_SIZING_GROW(0)}}});
+                CLAY_TEXT(CLAY_STRING("Release:  "), &sideBarTextConfig);
+                CLAY_TEXT(character.date, &sideBarTextConfig);
             }
-     
         }
     }
 }
@@ -840,76 +797,97 @@ void ChampionsLayout(){
 }
 
 void ChampionDraftLayout(){
-    CLAY(CLAY_ID("CHARACTERS"), {.cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER), .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, 
-    .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING, .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_TOP}, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING) }}){
-        int collumns = 4;
+    CLAY(CLAY_ID("WrapContainer"), { .layout =  { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING }}){
+        CLAY(CLAY_ID("CharactersContainer"), { .layout =  { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING, .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_TOP}, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING) }}){
+        int collumns = (windowWidth*0.2f)/120;
         int rows = CHARACTER_LAST/collumns;
         for(int i = 0; i < rows; i++){
-            CLAY_AUTO_ID( { .layout =  { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }, .childGap = DEFAULT_SPACING, }}){
+            CLAY_AUTO_ID({ .layout =  { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_FIT(0) }, .childGap = DEFAULT_SPACING, }}){
                 for(int y = i*collumns; y < collumns * (i+1); y++){
-                    CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }}}){
+                    CLAY_AUTO_ID({ .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }}}){
                         bool hovered = Clay_Hovered();
-                        if(hovered && input.isMouseReleased){
+                        if(hovered && input.isMouseReleased && y != CHARACTER_ALYSIA && y != CHARACTER_BAKKO){
                             characterDraftSelect = (Characters)y;
                         }
                         CLAY_AUTO_ID({ .image = { .imageData = &characters[y].icon},
-                        .layout = {.sizing = { CLAY_SIZING_FIXED(120), CLAY_SIZING_FIXED(65) }},
-                        .border = { .width = { 2,2,2,2}, .color = hovered? COLOR_RED : COLOR_LIGHT}});
+                        .layout = {.sizing = { CLAY_SIZING_FIXED(120),CLAY_SIZING_FIXED(65)}},
+                        .border = { .width = { 2,2,2,2}, .color = y == CHARACTER_ALYSIA || y == CHARACTER_BAKKO? COLOR_GREY : hovered? COLOR_RED : characterDraftSelect == y? COLOR_RED_HOVER : COLOR_LIGHT}}){
+                            if(y == CHARACTER_ALYSIA || y == CHARACTER_BAKKO){
+                                CLAY_AUTO_ID({.layout = {.sizing = {CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0)}}, .backgroundColor = {50,50,50,200}});
+                            }
+                        }
                         CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }}}){
                             CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } } });
-                            CLAY_TEXT(characters[y].name, CLAY_TEXT_CONFIG({ .fontId = FONT_ID_BOGLE, .fontSize = 28, 
-                            .textColor =  hovered? COLOR_RED : COLOR_LIGHT, .userData = FrameAllocateCustomData((CustomHTMLData) { .disablePointerEvents = true }) }));
+                            CLAY_TEXT(characters[y].name, CLAY_TEXT_CONFIG({ .fontId = FONT_ID_BOGLE, .fontSize = 36, 
+                            .textColor =  y == CHARACTER_ALYSIA || y == CHARACTER_BAKKO? COLOR_GREY : hovered? COLOR_RED : characterDraftSelect == y? COLOR_RED_HOVER : COLOR_LIGHT, .userData = FrameAllocateCustomData((CustomHTMLData) { .disablePointerEvents = true }) }));
                             CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } } });
                         }
                     }
                 }
             }
         }
-        CLAY_AUTO_ID( { .layout =  { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_FIT(0) }, .childGap = DEFAULT_SPACING, }}){
+        CLAY_AUTO_ID({ .layout =  { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_FIT(0) }, .childGap = DEFAULT_SPACING, }}){
             for(int i = collumns*rows; i < CHARACTER_LAST; i++){
-                CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }}}){
-                    bool hovered = Clay_Hovered();
-                    if(hovered && input.isMouseReleased){
-                        characterDraftSelect = (Characters)i;
-                    }
-                    CLAY_AUTO_ID({ .image = { .imageData = &characters[i].icon},
-                    .layout = {.sizing = { CLAY_SIZING_FIXED(120), CLAY_SIZING_FIXED(65) }},
-                    .border = { .width = { 2,2,2,2}, .color = hovered? COLOR_RED : COLOR_LIGHT}});
-                    CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }}}){
-                        CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } } });
-                        CLAY_TEXT(characters[i].name, CLAY_TEXT_CONFIG({ .fontId = FONT_ID_BOGLE, .fontSize = 28, 
-                        .textColor =  hovered? COLOR_RED : COLOR_LIGHT, .userData = FrameAllocateCustomData((CustomHTMLData) { .disablePointerEvents = true }) }));
-                        CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } } });
+                CLAY_AUTO_ID({ .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }}}){
+                        bool hovered = Clay_Hovered();
+                        if(hovered && input.isMouseReleased){
+                            characterDraftSelect = (Characters)i;
+                        }
+                        CLAY_AUTO_ID({ .image = { .imageData = &characters[i].icon},
+                        .layout = {.sizing = { CLAY_SIZING_FIXED(120),CLAY_SIZING_FIXED(65)}},
+                        .border = { .width = { 2,2,2,2}, .color = hovered? COLOR_RED : characterDraftSelect == i? COLOR_RED_HOVER : COLOR_LIGHT}});
+                        CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }}}){
+                            CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } } });
+                            CLAY_TEXT(characters[i].name, CLAY_TEXT_CONFIG({ .fontId = FONT_ID_BOGLE, .fontSize = 36, 
+                            .textColor =  hovered? COLOR_RED : characterDraftSelect == i? COLOR_RED_HOVER : COLOR_LIGHT, .userData = FrameAllocateCustomData((CustomHTMLData) { .disablePointerEvents = true }) }));
+                            CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } } });
+                        }
                     }
                 }
             }
         }
-    }
-    CLAY(CLAY_ID("PLAY_BUTTON"), { .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }}, 
-    .floating = { .attachTo = CLAY_ATTACH_TO_PARENT, .attachPoints = { CLAY_ATTACH_POINT_CENTER_BOTTOM, CLAY_ATTACH_POINT_CENTER_BOTTOM}, .offset = {0, -50}}
-    }){
-        CLAY_AUTO_ID({ .layout = { .padding = {32, 32, 16, 16} },
-        .backgroundColor = Clay_Hovered()? COLOR_RED : COLOR_BLUE,
-        .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
-        .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER)}){
-            if(Clay_Hovered() && input.isMouseReleased && characterDraftSelect != CHARACTER_NONE && characterDraftSelect != CHARACTER_LAST) current_page = PAGE_IN_GAME;
-                CLAY_TEXT(CLAY_STRING("BATTLE"), CLAY_TEXT_CONFIG({ .fontId = FONT_ID_BARTLE, .fontSize = 48, .textColor = COLOR_LIGHT, .userData =  FrameAllocateCustomData((CustomHTMLData) { .disablePointerEvents = true })}));
+        CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childGap = 100, .padding = {0,0,0,150}}}){
+            void* image = NULL;
+            switch (characterDraftSelect)
+            {
+                case CHARACTER_NONE: case CHARACTER_LAST: case CHARACTER_ALYSIA: case CHARACTER_BAKKO: image = NULL; break;
+                default: image = &characters[characterDraftSelect].image; break;
+            }
+            CLAY(CLAY_ID("PartMember1"), {.layout = {.sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childAlignment = {.x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_BOTTOM}}}){
+                CLAY(CLAY_ID("PartMemberImage1"), { .image = { .imageData = &characters[CHARACTER_ALYSIA].image}, .aspectRatio = {670.0f/666.0f},
+                .layout = {.layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = {CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0)}, .childAlignment = {.x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_TOP}}}){
+                    CLAY_TEXT(CLAY_STRING("Fizzy"), &smallHeaderTextConfig);
+                }
+            }
+            CLAY(CLAY_ID("Player"), {.layout = {.layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childAlignment = {.x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER}},
+            .floating = { .attachTo = CLAY_ATTACH_TO_PARENT, .attachPoints = { CLAY_ATTACH_POINT_CENTER_BOTTOM, CLAY_ATTACH_POINT_CENTER_BOTTOM}, .offset = {0, 0}}}){
+                CLAY(CLAY_ID("CharImage"), { .image = { .imageData = image}, .aspectRatio = {670.0f/666.0f},
+                .layout = {.sizing = {CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0)}, .childAlignment = {.x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_TOP}}}){
+                    //CLAY_TEXT(name, &headerTextConfig);
+                }
+            }
+            CLAY(CLAY_ID("PartMember2"), {.layout = {.sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childAlignment = {.x = CLAY_ALIGN_X_RIGHT, .y = CLAY_ALIGN_Y_BOTTOM}}}){
+                CLAY(CLAY_ID("PartMemberImage2"), { .image = { .imageData = &characters[CHARACTER_BAKKO].image}, .aspectRatio = {670.0f/666.0f},
+                .layout = {.layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = {CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0)}, .childAlignment = {.x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_TOP}}}){
+                    CLAY_TEXT(CLAY_STRING("Gorilla"), &smallHeaderTextConfig);
+                }
+            }
+            CLAY(CLAY_ID("PartyText"), {.layout = {.sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }},
+            .floating = { .attachTo = CLAY_ATTACH_TO_PARENT, .attachPoints = { CLAY_ATTACH_POINT_CENTER_TOP, CLAY_ATTACH_POINT_CENTER_TOP}, .offset = {0, 0}}}){
+                CLAY_TEXT(CLAY_STRING("Game Mode 3v3"), &headerTextConfig);
+            }
         }
-    }
-    CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .padding = {DEFAULT_SPACING, 100, DEFAULT_SPACING, DEFAULT_SPACING}, .childAlignment = { .x = CLAY_ALIGN_X_RIGHT, .y = CLAY_ALIGN_Y_CENTER}}}){
-        void* image = NULL;
-        Clay_String name = {};
-        switch (characterDraftSelect)
-        {
-            case CHARACTER_NONE: case CHARACTER_LAST: image = NULL; name = {}; break;
-            default: image = &characters[characterDraftSelect].image, name = characters[characterDraftSelect].name; break;
-        }
-        CLAY(CLAY_ID("CHAR_IMAGE"), { .image = { .imageData = image}, .aspectRatio = {800.0f/666.0f},
-        .layout = {.sizing = { CLAY_SIZING_GROW(.min = 800), CLAY_SIZING_GROW(.min = 800) }}}){
-            CLAY(CLAY_ID("Name"), { 
-            .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }}, 
-            .floating = { .attachTo = CLAY_ATTACH_TO_PARENT, .attachPoints = { CLAY_ATTACH_POINT_CENTER_TOP, CLAY_ATTACH_POINT_CENTER_TOP}}}){
-                CLAY_TEXT(name, &headerTextConfig);
+        CLAY(CLAY_ID("PLAY_BUTTON"), { .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = {CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0)}, .childGap = DEFAULT_SPACING, .childAlignment = {.x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_TOP}},
+        .floating = { .attachTo = CLAY_ATTACH_TO_PARENT, .attachPoints = { CLAY_ATTACH_POINT_CENTER_BOTTOM, CLAY_ATTACH_POINT_CENTER_BOTTOM}, .offset = {0, 0}}
+        }){
+            if(characters[characterDraftSelect].type.chars != "Support")
+            CLAY_TEXT(CLAY_STRING("Warrning: Support role not filled!"), CLAY_TEXT_CONFIG({ .fontId = FONT_ID_ROBOTO, .fontSize = 28, .textColor = COLOR_YELLOW}));
+            CLAY_AUTO_ID({ .layout = { .padding = {32, 32, 16, 16} },
+            .backgroundColor = Clay_Hovered()? COLOR_RED : COLOR_BLUE,
+            .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
+            .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER)}){
+                if(Clay_Hovered() && input.isMouseReleased && characterDraftSelect != CHARACTER_NONE && characterDraftSelect != CHARACTER_LAST) current_page = PAGE_IN_GAME;
+                    CLAY_TEXT(CLAY_STRING("Start"), CLAY_TEXT_CONFIG({ .fontId = FONT_ID_BARTLE, .fontSize = 48, .textColor = COLOR_LIGHT, .userData =  FrameAllocateCustomData((CustomHTMLData) { .disablePointerEvents = true })}));
             }
         }
     }
@@ -941,7 +919,7 @@ Clay_RenderCommandArray CreateLayout(bool mobileScreen, float lerpValue) {
                 }
             } 
         } break;
-        case PAGE_CHARACTER_DRAFT: {
+        case PAGE_CHARACTER_DRAFT:{
             CLAY(CLAY_ID("OuterContainer"), { .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING), .childGap = DEFAULT_SPACING }, .image = {&background_image} }) {
                 HeaderBar();
                 CLAY(CLAY_ID("PageContainer"), { .layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING } }){
@@ -956,12 +934,6 @@ Clay_RenderCommandArray CreateLayout(bool mobileScreen, float lerpValue) {
             }
         }break;
     }
-    
-    CLAY(CLAY_ID("OuterScrollContainer"), {
-        .layout = { .sizing = { CLAY_SIZING_FIXED(0), CLAY_SIZING_GROW(0) }, .layoutDirection = CLAY_LEFT_TO_RIGHT },
-        .clip = { .vertical = true, .childOffset = Clay_GetScrollOffset() },
-        .border = { .width = { .betweenChildren = 2 }, .color = COLOR_RED }
-    });
     return Clay_EndLayout();
 }
 
