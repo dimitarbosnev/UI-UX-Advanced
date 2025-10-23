@@ -862,9 +862,7 @@ void ChampionDraftLayout(){
             CLAY(CLAY_ID("Player"), {.layout = {.layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childAlignment = {.x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER}},
             .floating = { .attachTo = CLAY_ATTACH_TO_PARENT, .attachPoints = { CLAY_ATTACH_POINT_CENTER_BOTTOM, CLAY_ATTACH_POINT_CENTER_BOTTOM}, .offset = {0, 0}}}){
                 CLAY(CLAY_ID("CharImage"), { .image = { .imageData = image}, .aspectRatio = {670.0f/666.0f},
-                .layout = {.sizing = {CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0)}, .childAlignment = {.x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_TOP}}}){
-                    //CLAY_TEXT(name, &headerTextConfig);
-                }
+                .layout = {.sizing = {CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0)}, .childAlignment = {.x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_TOP}}});
             }
             CLAY(CLAY_ID("PartMember2"), {.layout = {.sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childAlignment = {.x = CLAY_ALIGN_X_RIGHT, .y = CLAY_ALIGN_Y_BOTTOM}}}){
                 CLAY(CLAY_ID("PartMemberImage2"), { .image = { .imageData = &characters[CHARACTER_BAKKO].image}, .aspectRatio = {670.0f/666.0f},
