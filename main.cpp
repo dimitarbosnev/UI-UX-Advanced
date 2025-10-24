@@ -141,6 +141,7 @@ Clay_String background_image = CLAY_STRING("images/background.jpg");
 Clay_String ingame_image = CLAY_STRING("images/ingame_background.jpg");
 Clay_String mainpage_image = CLAY_STRING("images/mainpage.png");
 Clay_String minimap_image = CLAY_STRING("images/minimap.png");
+Clay_String zander_image = CLAY_STRING("images/Zander.png");
 Clay_String mainpage_wallpapers[] = {
     CLAY_STRING("images/action_wallpaper.jpg"),
     CLAY_STRING("images/action2_wallpaper.jpg"),
@@ -690,6 +691,33 @@ void MainLayout(){
                 }
             }
         }
+        CLAY(CLAY_ID("News"), { .backgroundColor = COLOR_BLUE, .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER), .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
+        .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIXED(400), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING) }, 
+        .floating = { .attachTo = CLAY_ATTACH_TO_PARENT, .attachPoints = { CLAY_ATTACH_POINT_RIGHT_TOP, CLAY_ATTACH_POINT_RIGHT_TOP}}}){
+            CLAY_TEXT(CLAY_STRING("News"), &smallHeaderTextConfig);
+            CLAY_AUTO_ID({.border = { .width = {0, 0, 2, 2}, .color = COLOR_LIGHT },.cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER),
+            .layout  = { .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_FIT(0)}}});
+            CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { .width = CLAY_SIZING_GROW(0) }}}){
+                CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { .width = CLAY_SIZING_GROW(0) }, .padding = {0,0,0,10}}}){
+                    CLAY_TEXT(CLAY_STRING(" Zander Comes to the arena: March 2026!"), &defaultTextConfig);
+                }
+                CLAY_AUTO_ID({.layout = {.sizing = { .width = CLAY_SIZING_GROW(0) }}, .image  = { &zander_image }, . aspectRatio = 16.0f/9.0f});
+
+            }
+            CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } }, .border = { .width = {0, 0, 0, 2}, .color = COLOR_LIGHT }});
+            CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { .width = CLAY_SIZING_GROW(0) }, .childAlignment = { CLAY_ALIGN_X_LEFT, CLAY_ALIGN_Y_CENTER}}}){
+                CLAY_TEXT(CLAY_STRING("Take the Survey:     "), &defaultTextConfig);
+                CLAY_AUTO_ID({
+                .layout = { .padding = {8, 8, 3, 3} },
+                .backgroundColor = Clay_Hovered()? COLOR_RED : current_page == PAGE_CHARACTERS ? COLOR_RED_HOVER : COLOR_BLUE,
+                .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
+                .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER)}) {
+                    if(Clay_Hovered() && input.isMouseReleased) {}//current_page = PAGE_CHARACTERS;
+                    CLAY_TEXT(CLAY_STRING("Survey"), CLAY_TEXT_CONFIG({ .fontId = FONT_ID_BOGLE, .fontSize = 28, .textColor = COLOR_LIGHT, .userData = FrameAllocateCustomData((CustomHTMLData) { .disablePointerEvents = true })}));
+                }
+            }
+
+        }
     }
 }
 
@@ -801,13 +829,13 @@ void CharactersContainer(){
                 CLAY_TEXT(CLAY_STRING("SUPPORTS"), CLAY_TEXT_CONFIG({ .fontId = FONT_ID_BOGLE, .fontSize = 36, .textColor = hovered? COLOR_RED : characterInfoFilter == CHARACTER_FILTER_SUPPORTS? COLOR_RED_HOVER : COLOR_LIGHT, .userData = FrameAllocateCustomData((CustomHTMLData) { .disablePointerEvents = true })}));
             }
         }
-        CLAY(CLAY_ID("CharactersContainer2"), { .layout =  { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING, .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_TOP}, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING) }}){
+        CLAY(CLAY_ID("CharactersContainer2"), { .layout =  { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING, .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_TOP}, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING) }}){
             int collumns = (windowWidth*0.88f)/240;
             int rows = infoFillterNum/collumns;
             for(int i = 0; i < rows; i++){
                 CLAY_AUTO_ID({ .layout =  { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_FIT(0) }, .childGap = DEFAULT_SPACING}}){
                     for(int y = i*collumns; y < collumns * (i+1); y++){
-                        CLAY_AUTO_ID({ .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }}}){
+                        CLAY_AUTO_ID({ .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_FIT(0) }}}){
                             bool hovered = Clay_Hovered();
                             if(hovered && input.isMouseReleased){
                                 characterInfoSelect = infoFillterChar[y];
@@ -930,12 +958,19 @@ Characters draftFillterChar[CHARACTER_LAST]{
     CHARACTER_SIRIUS
 };
 uint32_t draftFillterNum = 15;
-
+bool selectGameMode;
+typedef enum : uint8_t{
+    GAME_MODE_ARENA_3V3,
+    GAME_MODE_ARENA_2V2,
+    GAME_MODE_CLASSIC_5V5,
+}GameMode;
+const Clay_String gameModes[3] = {CLAY_STRING("Arena 3v3"), CLAY_STRING("Arena 2v2"), CLAY_STRING("Classic 5v5")};
+GameMode gameMode;
 void ChampionDraftLayout(){
     CLAY(CLAY_ID("WrapContainer"), { .layout =  { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING }}){
         CLAY(CLAY_ID("CharactersContainer"), { .layout =  { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING, .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_TOP}, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING) }}){
             CLAY(CLAY_ID("Fillters"),{.layout =  { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_FIT(0) }, .childAlignment = { .x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER}, .childGap = 8}}){
-                CLAY_AUTO_ID({ .layout = { .sizing = { CLAY_SIZING_PERCENT(0.15f), CLAY_SIZING_FIT(0) }, .padding = {16, 24, 6, 6} }, .backgroundColor = COLOR_BLUE,
+                CLAY_AUTO_ID({ .layout = { .sizing = { CLAY_SIZING_PERCENT(0.2f), CLAY_SIZING_FIT(0) }, .padding = {16, 24, 6, 6} }, .backgroundColor = COLOR_BLUE,
                 .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
                 .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER),
                 }) {
@@ -999,36 +1034,36 @@ void ChampionDraftLayout(){
                     CLAY_TEXT(CLAY_STRING("SUPPORTS"), CLAY_TEXT_CONFIG({ .fontId = FONT_ID_BOGLE, .fontSize = 24, .textColor = hovered? COLOR_RED : characterDraftFilter == CHARACTER_FILTER_SUPPORTS? COLOR_RED_HOVER : COLOR_LIGHT, .userData = FrameAllocateCustomData((CustomHTMLData) { .disablePointerEvents = true })}));
                 }
             }
-        int collumns = (windowWidth*0.3f)/120;
-        int rows = draftFillterNum/collumns;
-        for(int i = 0; i < rows; i++){
-            CLAY_AUTO_ID({ .layout =  { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_FIT(0) }, .childGap = DEFAULT_SPACING, }}){
-                for(int y = i*collumns; y < collumns * (i+1); y++){
-                    CLAY_AUTO_ID({ .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }}}){
-                        bool hovered = Clay_Hovered();
-                        if(hovered && input.isMouseReleased && draftFillterChar[y] != CHARACTER_ALYSIA && draftFillterChar[y] != CHARACTER_BAKKO){
-                            characterDraftSelect = (Characters)draftFillterChar[y];
-                        }
-                        CLAY_AUTO_ID({ .image = { .imageData = &characters[draftFillterChar[y]].icon},
-                        .layout = {.sizing = { CLAY_SIZING_FIXED(120),CLAY_SIZING_FIXED(65)}},
-                        .border = { .width = { 2,2,2,2}, .color = draftFillterChar[y] == CHARACTER_ALYSIA || draftFillterChar[y] == CHARACTER_BAKKO? COLOR_GRAY : hovered? COLOR_RED : characterDraftSelect == draftFillterChar[y]? COLOR_RED_HOVER : COLOR_LIGHT}}){
-                            if(draftFillterChar[y] == CHARACTER_ALYSIA || draftFillterChar[y] == CHARACTER_BAKKO){
-                                CLAY_AUTO_ID({.layout = {.sizing = {CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0)}}, .backgroundColor = {50,50,50,200}});
+            int collumns = 4;
+            int rows = draftFillterNum/collumns;
+            for(int i = 0; i < rows; i++){
+                CLAY_AUTO_ID({ .layout =  { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_FIT(0) }, .childGap = DEFAULT_SPACING, }}){
+                    for(int y = i*collumns; y < collumns * (i+1); y++){
+                        CLAY_AUTO_ID({ .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }}}){
+                            bool hovered = Clay_Hovered();
+                            if(hovered && input.isMouseReleased && draftFillterChar[y] != CHARACTER_ALYSIA && draftFillterChar[y] != CHARACTER_BAKKO){
+                                characterDraftSelect = (Characters)draftFillterChar[y];
                             }
-                        }
-                        CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }}}){
-                            CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } } });
-                            CLAY_TEXT(characters[draftFillterChar[y]].name, CLAY_TEXT_CONFIG({ .fontId = FONT_ID_BOGLE, .fontSize = 36, 
-                            .textColor =  draftFillterChar[y] == CHARACTER_ALYSIA || draftFillterChar[y] == CHARACTER_BAKKO? COLOR_GRAY : hovered? COLOR_RED : characterDraftSelect == draftFillterChar[y]? COLOR_RED_HOVER : COLOR_LIGHT, .userData = FrameAllocateCustomData((CustomHTMLData) { .disablePointerEvents = true }) }));
-                            CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } } });
+                            CLAY_AUTO_ID({ .image = { .imageData = &characters[draftFillterChar[y]].icon},
+                            .layout = {.sizing = { CLAY_SIZING_FIXED(120),CLAY_SIZING_FIXED(65)}},
+                            .border = { .width = { 2,2,2,2}, .color = draftFillterChar[y] == CHARACTER_ALYSIA || draftFillterChar[y] == CHARACTER_BAKKO? COLOR_GRAY : hovered? COLOR_RED : characterDraftSelect == draftFillterChar[y]? COLOR_RED_HOVER : COLOR_LIGHT}}){
+                                if(draftFillterChar[y] == CHARACTER_ALYSIA || draftFillterChar[y] == CHARACTER_BAKKO){
+                                    CLAY_AUTO_ID({.layout = {.sizing = {CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0)}}, .backgroundColor = {50,50,50,200}});
+                                }
+                            }
+                            CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }}}){
+                                CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } } });
+                                CLAY_TEXT(characters[draftFillterChar[y]].name, CLAY_TEXT_CONFIG({ .fontId = FONT_ID_BOGLE, .fontSize = 36, 
+                                .textColor =  draftFillterChar[y] == CHARACTER_ALYSIA || draftFillterChar[y] == CHARACTER_BAKKO? COLOR_GRAY : hovered? COLOR_RED : characterDraftSelect == draftFillterChar[y]? COLOR_RED_HOVER : COLOR_LIGHT, .userData = FrameAllocateCustomData((CustomHTMLData) { .disablePointerEvents = true }) }));
+                                CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } } });
+                            }
                         }
                     }
                 }
             }
-        }
-        CLAY_AUTO_ID({ .layout =  { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_FIT(0) }, .childGap = DEFAULT_SPACING, }}){
-            for(int i = collumns*rows; i < draftFillterNum; i++){
-                CLAY_AUTO_ID({ .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }}}){
+            CLAY_AUTO_ID({ .layout =  { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_FIT(0) }, .childGap = DEFAULT_SPACING, }}){
+                for(int i = collumns*rows; i < draftFillterNum; i++){
+                    CLAY_AUTO_ID({ .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }}}){
                         bool hovered = Clay_Hovered();
                         if(hovered && input.isMouseReleased){
                             characterDraftSelect = (Characters)draftFillterChar[i];
@@ -1039,10 +1074,10 @@ void ChampionDraftLayout(){
                         CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }}}){
                             CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } } });
                             CLAY_TEXT(characters[draftFillterChar[i]].name, CLAY_TEXT_CONFIG({ .fontId = FONT_ID_BOGLE, .fontSize = 36, 
-                            .textColor =  hovered? COLOR_RED : characterDraftSelect == draftFillterChar[i]? COLOR_RED_HOVER : COLOR_LIGHT, .userData = FrameAllocateCustomData((CustomHTMLData) { .disablePointerEvents = true }) }));
+                            .textColor =  hovered? COLOR_RED : characterDraftSelect == draftFillterChar[i]? COLOR_RED_HOVER : COLOR_LIGHT, .userData = FrameAllocateCustomData((CustomHTMLData) { .disablePointerEvents = true })}));
                             CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } } });
                         }
-                    }
+                     }
                 }
             }
         }
@@ -1062,8 +1097,8 @@ void ChampionDraftLayout(){
             CLAY(CLAY_ID("Player"), {.layout = {.layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childAlignment = {.x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_CENTER}},
             .floating = { .attachTo = CLAY_ATTACH_TO_PARENT, .attachPoints = { CLAY_ATTACH_POINT_CENTER_BOTTOM, CLAY_ATTACH_POINT_CENTER_BOTTOM}, .offset = {0, 40}}}){
                 CLAY(CLAY_ID("CharImage"), { .image = { .imageData = image}, .aspectRatio = {670.0f/666.0f},
-                .layout = {.sizing = {CLAY_SIZING_PERCENT(0.7f), CLAY_SIZING_PERCENT(0.7f)}, .childAlignment = {.x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_TOP}}}){
-                    CLAY_TEXT(CLAY_STRING("You"), &smallHeaderTextConfig);
+                .layout = {.sizing = {CLAY_SIZING_PERCENT(0.8f), CLAY_SIZING_PERCENT(0.8f)}, .childAlignment = {.x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_TOP}}}){
+                    CLAY_TEXT(CLAY_STRING("You"), CLAY_TEXT_CONFIG({ .fontId = FONT_ID_BARTLE, .fontSize = 30, .textColor = COLOR_YELLOW, .textAlignment = CLAY_TEXT_ALIGN_CENTER }));
                 }
             }
             CLAY(CLAY_ID("PartMember2"), {.layout = {.sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childAlignment = {.x = CLAY_ALIGN_X_RIGHT, .y = CLAY_ALIGN_Y_BOTTOM}}}){
@@ -1072,9 +1107,37 @@ void ChampionDraftLayout(){
                     CLAY_TEXT(CLAY_STRING("Gorilla"), &smallHeaderTextConfig);
                 }
             }
-            CLAY(CLAY_ID("PartyText"), {.layout = {.sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }},
+            CLAY(CLAY_ID("GameMode"), {.layout = {.sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }, .childGap = DEFAULT_SPACING, .childAlignment = {.x = CLAY_ALIGN_X_LEFT, .y = !selectGameMode? CLAY_ALIGN_Y_CENTER : CLAY_ALIGN_Y_TOP}}, 
             .floating = { .attachTo = CLAY_ATTACH_TO_PARENT, .attachPoints = { CLAY_ATTACH_POINT_CENTER_TOP, CLAY_ATTACH_POINT_CENTER_TOP}, .offset = {0, 0}}}){
-                CLAY_TEXT(CLAY_STRING("Game Mode 3v3"), &headerTextConfig);
+                CLAY_AUTO_ID({
+                .layout = { .padding = {16, 16, 6, 6} },
+                .backgroundColor = Clay_Hovered()? COLOR_RED : COLOR_BLUE,
+                .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
+                .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER)}) {
+                    if(Clay_Hovered() &&input.isMouseReleased){
+                        selectGameMode = !selectGameMode;
+                    }
+                    CLAY_TEXT(CLAY_STRING("Select"), &sideBarTextConfig);
+                }
+                if(!selectGameMode){
+                    CLAY_TEXT(gameModes[gameMode], &headerTextConfig);
+                }
+                else{
+                    CLAY(CLAY_ID("GameModes"), { .backgroundColor = COLOR_BLUE, .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER), .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
+                    .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }, .childGap = DEFAULT_SPACING, .childAlignment = {.x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_TOP}, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING) }}){
+                        for(int i = 0; i < 3; i++){
+                            CLAY_AUTO_ID({ .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }, .padding = {0,0,0,DEFAULT_SPACING}},
+                            .border = {.color = COLOR_LIGHT, .width = {0,0,0,2}}}){
+                                bool hovered = Clay_Hovered();
+                                if(hovered && input.isMouseReleased){
+                                    gameMode = (GameMode)i;
+                                    selectGameMode = false;
+                                }
+                                CLAY_TEXT(gameModes[i], CLAY_TEXT_CONFIG({ .fontId = FONT_ID_BARTLE, .fontSize = 36, .textColor =  hovered? COLOR_RED : gameMode == i? COLOR_RED_HOVER : COLOR_LIGHT, .userData = FrameAllocateCustomData((CustomHTMLData) { .disablePointerEvents = true })}));
+                            }
+                        }
+                    }
+                }
             }
         }
         CLAY(CLAY_ID("PLAY_BUTTON"), { .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = {CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0)}, .childGap = DEFAULT_SPACING, .childAlignment = {.x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_TOP}},
