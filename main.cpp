@@ -19,7 +19,7 @@ const Clay_Color COLOR_LIGHT = (Clay_Color) {244, 235, 230, 255};
 const Clay_Color COLOR_LIGHT_GLOW = (Clay_Color) {244, 235, 230, 45};
 const Clay_Color COLOR_LIGHT_HOVER = (Clay_Color) {200, 180, 180, 255};
 const Clay_Color COLOR_RED = (Clay_Color) {209, 52, 52, 255};
-const Clay_Color COLOR_RED_HOVER = (Clay_Color) {170, 43, 43, 255};
+const Clay_Color COLOR_RED_HOVER = (Clay_Color) {160, 40, 40, 255};
 const Clay_Color COLOR_BLUE = (Clay_Color) {20, 56, 115, 230};
 const Clay_Color COLOR_YELLOW = (Clay_Color) {224, 176, 0, 255};
 
@@ -961,14 +961,15 @@ Characters draftFillterChar[CHARACTER_LAST]{
 };
 uint32_t draftFillterNum = 15;
 bool selectGameMode = true;
-typedef enum : uint8_t{
+typedef enum : int8_t{
+    GAME_MODE_NONE = -1,
     GAME_MODE_ARENA_3V3,
     GAME_MODE_ARENA_2V2,
     GAME_MODE_CLASSIC_5V5,
 }GameMode;
 const Clay_String selectGameModes[3] = {CLAY_STRING("3v3\nArena"), CLAY_STRING("2v2\nArena"), CLAY_STRING("5v5\nClassic")};
 const Clay_String gameModes[3] = {CLAY_STRING("Arena 3v3"), CLAY_STRING("Arena 2v2"), CLAY_STRING("Classic 5v5")};
-GameMode gameMode;
+GameMode gameMode = GAME_MODE_NONE;
 
 
 
