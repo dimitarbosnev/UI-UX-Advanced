@@ -19,7 +19,7 @@ const Clay_Color COLOR_LIGHT = (Clay_Color) {244, 235, 230, 255};
 const Clay_Color COLOR_LIGHT_GLOW = (Clay_Color) {244, 235, 230, 45};
 const Clay_Color COLOR_LIGHT_HOVER = (Clay_Color) {200, 180, 180, 255};
 const Clay_Color COLOR_RED = (Clay_Color) {209, 52, 52, 255};
-const Clay_Color COLOR_RED_HOVER = (Clay_Color) {125, 35, 35, 255};
+const Clay_Color COLOR_RED_HOVER = (Clay_Color) {170, 43, 43, 255};
 const Clay_Color COLOR_BLUE = (Clay_Color) {20, 56, 115, 230};
 const Clay_Color COLOR_YELLOW = (Clay_Color) {224, 176, 0, 255};
 
