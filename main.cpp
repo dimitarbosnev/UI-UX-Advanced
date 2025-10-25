@@ -13,8 +13,10 @@ const uint16_t FONT_ID_ROBOTO = 2;
 #define DEFAULT_CORNER 10
 
 const Clay_Color COLOR_GRAY = (Clay_Color) {50, 50, 50, 255};
+const Clay_Color COLOR_TRANSPERENT = (Clay_Color) {0, 0, 0, 0};
 const Clay_Color COLOR_BLACK = (Clay_Color) {0, 0, 0, 255};
 const Clay_Color COLOR_LIGHT = (Clay_Color) {244, 235, 230, 255};
+const Clay_Color COLOR_LIGHT_GLOW = (Clay_Color) {244, 235, 230, 45};
 const Clay_Color COLOR_LIGHT_HOVER = (Clay_Color) {200, 180, 180, 255};
 const Clay_Color COLOR_RED = (Clay_Color) {209, 52, 52, 255};
 const Clay_Color COLOR_RED_HOVER = (Clay_Color) {125, 35, 35, 255};
@@ -958,14 +960,48 @@ Characters draftFillterChar[CHARACTER_LAST]{
     CHARACTER_SIRIUS
 };
 uint32_t draftFillterNum = 15;
-bool selectGameMode;
+bool selectGameMode = true;
 typedef enum : uint8_t{
     GAME_MODE_ARENA_3V3,
     GAME_MODE_ARENA_2V2,
     GAME_MODE_CLASSIC_5V5,
 }GameMode;
+const Clay_String selectGameModes[3] = {CLAY_STRING("3v3\nArena"), CLAY_STRING("2v2\nArena"), CLAY_STRING("5v5\nClassic")};
 const Clay_String gameModes[3] = {CLAY_STRING("Arena 3v3"), CLAY_STRING("Arena 2v2"), CLAY_STRING("Classic 5v5")};
 GameMode gameMode;
+
+
+
+void GameModeSelectLayout(){
+    CLAY(CLAY_ID("WrapContainer"), { .layout =  { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING }}){
+        CLAY_AUTO_ID({.layout = {.sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }}}){
+            CLAY_AUTO_ID({
+            .layout = { .padding = {16, 16, 6, 6} },
+            .backgroundColor = Clay_Hovered() ? COLOR_RED : COLOR_BLUE,
+            .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
+            .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER)}) {
+                if(Clay_Hovered() && input.isMouseReleased) 
+                {
+                    selectGameMode = false;
+                }
+                CLAY_TEXT(CLAY_STRING("Back"), &sideBarTextConfig);
+            }
+        }
+        for(int i = 0; i < 3; i++){
+            CLAY_AUTO_ID({ .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, . childAlignment = {CLAY_ALIGN_X_CENTER, CLAY_ALIGN_Y_CENTER}},
+            .backgroundColor = Clay_Hovered()? COLOR_LIGHT_GLOW : COLOR_TRANSPERENT}){
+                bool hovered = Clay_Hovered();
+                if(hovered && input.isMouseReleased){
+                    gameMode = (GameMode)i;
+                    selectGameMode = false;
+                }
+                CLAY_TEXT(selectGameModes[i], CLAY_TEXT_CONFIG({ .fontId = FONT_ID_BARTLE, .fontSize = 42, .textColor = hovered? COLOR_RED : gameMode == i? COLOR_RED_HOVER : COLOR_LIGHT, .textAlignment = CLAY_TEXT_ALIGN_CENTER, .lineHeight = 72, .userData = FrameAllocateCustomData((CustomHTMLData) { .disablePointerEvents = true })}));
+            }
+        }
+    }
+}
+
+
 void ChampionDraftLayout(){
     CLAY(CLAY_ID("WrapContainer"), { .layout =  { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING }}){
         CLAY(CLAY_ID("CharactersContainer"), { .layout =  { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING, .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_TOP}, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING) }}){
@@ -1102,9 +1138,11 @@ void ChampionDraftLayout(){
                 }
             }
             CLAY(CLAY_ID("PartMember2"), {.layout = {.sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childAlignment = {.x = CLAY_ALIGN_X_RIGHT, .y = CLAY_ALIGN_Y_BOTTOM}}}){
-                CLAY(CLAY_ID("PartMemberImage2"), { .image = { .imageData = &characters[CHARACTER_BAKKO].image}, .aspectRatio = {670.0f/666.0f},
-                .layout = {.layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = {CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0)}, .childAlignment = {.x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_TOP}}}){
-                    CLAY_TEXT(CLAY_STRING("Gorilla"), &smallHeaderTextConfig);
+                if(gameMode != GAME_MODE_ARENA_2V2){
+                    CLAY(CLAY_ID("PartMemberImage2"), { .image = { .imageData = &characters[CHARACTER_BAKKO].image}, .aspectRatio = {670.0f/666.0f},
+                    .layout = {.layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = {CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0)}, .childAlignment = {.x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_TOP}}}){
+                        CLAY_TEXT(CLAY_STRING("Gorilla"), &smallHeaderTextConfig);
+                    }
                 }
             }
             CLAY(CLAY_ID("GameMode"), {.layout = {.sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }, .childGap = DEFAULT_SPACING, .childAlignment = {.x = CLAY_ALIGN_X_LEFT, .y = !selectGameMode? CLAY_ALIGN_Y_CENTER : CLAY_ALIGN_Y_TOP}}, 
@@ -1115,29 +1153,11 @@ void ChampionDraftLayout(){
                 .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
                 .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER)}) {
                     if(Clay_Hovered() &&input.isMouseReleased){
-                        selectGameMode = !selectGameMode;
+                        selectGameMode = true;
                     }
                     CLAY_TEXT(CLAY_STRING("Select"), &sideBarTextConfig);
-                }
-                if(!selectGameMode){
-                    CLAY_TEXT(gameModes[gameMode], &headerTextConfig);
-                }
-                else{
-                    CLAY(CLAY_ID("GameModes"), { .backgroundColor = COLOR_BLUE, .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER), .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
-                    .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }, .childGap = DEFAULT_SPACING, .childAlignment = {.x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_TOP}, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING) }}){
-                        for(int i = 0; i < 3; i++){
-                            CLAY_AUTO_ID({ .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }, .padding = {0,0,0,DEFAULT_SPACING}},
-                            .border = {.color = COLOR_LIGHT, .width = {0,0,0,2}}}){
-                                bool hovered = Clay_Hovered();
-                                if(hovered && input.isMouseReleased){
-                                    gameMode = (GameMode)i;
-                                    selectGameMode = false;
-                                }
-                                CLAY_TEXT(gameModes[i], CLAY_TEXT_CONFIG({ .fontId = FONT_ID_BARTLE, .fontSize = 36, .textColor =  hovered? COLOR_RED : gameMode == i? COLOR_RED_HOVER : COLOR_LIGHT, .userData = FrameAllocateCustomData((CustomHTMLData) { .disablePointerEvents = true })}));
-                            }
-                        }
-                    }
-                }
+                }  
+                CLAY_TEXT(gameModes[gameMode], &headerTextConfig);
             }
         }
         CLAY(CLAY_ID("PLAY_BUTTON"), { .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = {CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0)}, .childGap = DEFAULT_SPACING, .childAlignment = {.x = CLAY_ALIGN_X_CENTER, .y = CLAY_ALIGN_Y_TOP}},
@@ -1153,6 +1173,15 @@ void ChampionDraftLayout(){
                     CLAY_TEXT(CLAY_STRING("Start"), CLAY_TEXT_CONFIG({ .fontId = FONT_ID_BARTLE, .fontSize = 48, .textColor = COLOR_LIGHT, .userData =  FrameAllocateCustomData((CustomHTMLData) { .disablePointerEvents = true })}));
             }
         }
+    }
+}
+
+void PlayMenu(){
+    if(selectGameMode){
+        GameModeSelectLayout();
+    }
+    else{
+        ChampionDraftLayout();
     }
 }
 
@@ -1336,7 +1365,7 @@ Clay_RenderCommandArray CreateLayout(bool mobileScreen, float lerpValue) {
                 HeaderBar();
                 CLAY(CLAY_ID("PageContainer"), { .layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childGap = DEFAULT_SPACING } }){
                     SideBar();
-                    ChampionDraftLayout();
+                    PlayMenu();
                 }
             } 
         } break;
