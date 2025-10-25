@@ -17,7 +17,7 @@ const Clay_Color COLOR_BLACK = (Clay_Color) {0, 0, 0, 255};
 const Clay_Color COLOR_LIGHT = (Clay_Color) {244, 235, 230, 255};
 const Clay_Color COLOR_LIGHT_HOVER = (Clay_Color) {200, 180, 180, 255};
 const Clay_Color COLOR_RED = (Clay_Color) {209, 52, 52, 255};
-const Clay_Color COLOR_RED_HOVER = (Clay_Color) {170, 43, 43, 255};
+const Clay_Color COLOR_RED_HOVER = (Clay_Color) {160, 40, 40, 255};
 const Clay_Color COLOR_BLUE = (Clay_Color) {20, 56, 115, 230};
 const Clay_Color COLOR_YELLOW = (Clay_Color) {224, 176, 0, 255};
 
@@ -131,7 +131,8 @@ typedef CLAY_PACKED_ENUM{
     PAGE_MAIN,
     PAGE_CHARACTERS,
     PAGE_CHARACTER_DRAFT,
-    PAGE_IN_GAME   
+    PAGE_IN_GAME,
+    PAGE_STYLE_SHEET,   
 }Page;
 Page current_page;
 
@@ -905,13 +906,13 @@ void CharacterInfo(CharInfo& character){
         CLAY_AUTO_ID({.clip{false, true}, .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_GROW(0) }, .padding = {0, DEFAULT_SPACING*2, 40, 0}, .childGap = DEFAULT_SPACING, .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_TOP}}}){
             CLAY_TEXT(CLAY_STRING("      Lore"), &sideBarTextConfig);
             CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_FIT(0) }, .padding = CLAY_PADDING_ALL(DEFAULT_SPACING), .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_CENTER}},
-            .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT }, .cornerRadius = CLAY_CORNER_RADIUS(25), .backgroundColor = COLOR_BLUE}){
+            .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT }, .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER), .backgroundColor = COLOR_BLUE}){
                 CLAY_TEXT(character.lore, &smallTextConfig);
             }
             CLAY_TEXT(CLAY_STRING("      Abilites"), &sideBarTextConfig);
             for(int i = 0; i < 4; i++){
                 CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_FIT(0) }, .padding = {DEFAULT_SPACING, DEFAULT_SPACING, 8, 8}, .childGap = DEFAULT_SPACING, .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_CENTER}},
-                .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT }, .cornerRadius = CLAY_CORNER_RADIUS(25), .backgroundColor = COLOR_BLUE}){
+                .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT }, .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER), .backgroundColor = COLOR_BLUE}){
                     CLAY_AUTO_ID({ .image = { .imageData = &character.ability[i]}, .layout = {.sizing = { CLAY_SIZING_FIXED(64), CLAY_SIZING_FIXED(64) }}});
                     CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childAlignment = { .x = CLAY_ALIGN_X_LEFT, .y = CLAY_ALIGN_Y_TOP}}}){
                         CLAY_TEXT(character.ability_name[i], &sideBarTextConfig);
@@ -1312,6 +1313,58 @@ void InGameUI(){
     }
 }
 
+void StyleSheet(){
+    CLAY(CLAY_ID("FONTS"),{.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }, .childAlignment = {CLAY_ALIGN_X_LEFT, CLAY_ALIGN_Y_CENTER}, .childGap = DEFAULT_SPACING}}){
+        CLAY_TEXT(CLAY_STRING("FONTS"), &sideBarTextConfig);
+        CLAY_TEXT(CLAY_STRING("Title"), &titleTextConfig);
+        CLAY_TEXT(CLAY_STRING("SubTitle"), &sideBarTextConfig);
+        CLAY_TEXT(CLAY_STRING("SmallText"), &smallTextConfig);
+    }
+    CLAY(CLAY_ID("COLORS"),{.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }, .childAlignment = {CLAY_ALIGN_X_LEFT, CLAY_ALIGN_Y_CENTER}, .childGap = DEFAULT_SPACING}}){
+        CLAY_TEXT(CLAY_STRING("Colors"), &sideBarTextConfig);
+        CLAY(CLAY_ID("Primary"),{.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }, .childAlignment = {CLAY_ALIGN_X_LEFT, CLAY_ALIGN_Y_CENTER}, .childGap = DEFAULT_SPACING}}){
+            CLAY_TEXT(CLAY_STRING("Primary"), &defaultTextConfig);
+            CLAY_AUTO_ID({ .layout = { .sizing = { CLAY_SIZING_FIXED(100), CLAY_SIZING_GROW(0) } },.backgroundColor = COLOR_BLUE});   
+        }
+        CLAY(CLAY_ID("Secondary"),{.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }, .childAlignment = {CLAY_ALIGN_X_LEFT, CLAY_ALIGN_Y_CENTER}, .childGap = DEFAULT_SPACING}}){
+            CLAY_TEXT(CLAY_STRING("Secondary"), &defaultTextConfig);
+            CLAY_AUTO_ID({ .layout = { .sizing = { CLAY_SIZING_FIXED(100), CLAY_SIZING_GROW(0) } },.backgroundColor = COLOR_RED});   
+        }
+        CLAY(CLAY_ID("Tertiary1"),{.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }, .childAlignment = {CLAY_ALIGN_X_LEFT, CLAY_ALIGN_Y_CENTER}, .childGap = DEFAULT_SPACING}}){
+            CLAY_TEXT(CLAY_STRING("Tertiary"), &defaultTextConfig);
+            CLAY_AUTO_ID({ .layout = { .sizing = { CLAY_SIZING_FIXED(100), CLAY_SIZING_GROW(0) } },.backgroundColor = COLOR_LIGHT});   
+        }
+        CLAY(CLAY_ID("Tertiary3"),{.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }, .childAlignment = {CLAY_ALIGN_X_LEFT, CLAY_ALIGN_Y_CENTER}, .childGap = DEFAULT_SPACING}}){
+            CLAY_TEXT(CLAY_STRING("Tertiary"), &defaultTextConfig);
+            CLAY_AUTO_ID({ .layout = { .sizing = { CLAY_SIZING_FIXED(100), CLAY_SIZING_GROW(0) } },.backgroundColor = COLOR_YELLOW});   
+        }
+    }
+    CLAY(CLAY_ID("BUTTONS"),{.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }, .childAlignment = {CLAY_ALIGN_X_LEFT, CLAY_ALIGN_Y_CENTER}, .childGap = DEFAULT_SPACING}}){
+        CLAY_TEXT(CLAY_STRING("Button Style"), &sideBarTextConfig);
+        CLAY_AUTO_ID({
+        .layout = { .padding = {16, 16, 6, 6} },
+        .backgroundColor = COLOR_BLUE,
+        .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
+        .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER)}) {
+            CLAY_TEXT(CLAY_STRING("Button"), &sideBarTextConfig);
+        }        
+        CLAY_AUTO_ID({
+        .layout = { .padding = {16, 16, 6, 6} },
+        .backgroundColor = COLOR_RED,
+        .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
+        .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER)}) {
+            CLAY_TEXT(CLAY_STRING("Hovered"), &sideBarTextConfig);
+        }
+        CLAY_AUTO_ID({
+        .layout = { .padding = {16, 16, 6, 6} },
+        .backgroundColor = COLOR_RED_HOVER,
+        .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
+        .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER)}) {
+            CLAY_TEXT(CLAY_STRING("Selected"), &sideBarTextConfig);
+        }
+    }
+}
+
 
 Clay_RenderCommandArray CreateLayout(bool mobileScreen, float lerpValue) {
     Clay_BeginLayout();
@@ -1347,6 +1400,14 @@ Clay_RenderCommandArray CreateLayout(bool mobileScreen, float lerpValue) {
         case PAGE_IN_GAME:{
             CLAY(CLAY_ID("OuterContainer"), { .layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }}, .image = {&ingame_image} }) {
                 InGameUI(); 
+            }
+        }break;
+        case PAGE_STYLE_SHEET:{
+            CLAY(CLAY_ID("OuterContainer"), {.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { CLAY_SIZING_GROW(0), CLAY_SIZING_GROW(0) }, .childAlignment = {CLAY_ALIGN_X_CENTER, CLAY_ALIGN_Y_CENTER}, .childGap = DEFAULT_SPACING}, .backgroundColor = COLOR_BLACK}) {
+                CLAY_TEXT(CLAY_STRING("Style Sheet"), &sideBarTextConfig);
+                CLAY(CLAY_ID("InnerContainer"), {.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { CLAY_SIZING_FIT(0), CLAY_SIZING_FIT(0) }, .childAlignment = {CLAY_ALIGN_X_CENTER, CLAY_ALIGN_Y_CENTER}, .childGap = DEFAULT_SPACING}, .backgroundColor = COLOR_BLACK}) {
+                    StyleSheet(); 
+                }
             }
         }break;
     }
