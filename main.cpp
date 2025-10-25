@@ -713,8 +713,7 @@ void MainLayout(){
                 .layout = { .padding = {8, 8, 3, 3} },
                 .backgroundColor = Clay_Hovered()? COLOR_RED : current_page == PAGE_CHARACTERS ? COLOR_RED_HOVER : COLOR_BLUE,
                 .border = { .width = {2, 2, 2, 2}, .color = COLOR_LIGHT },
-                .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER)}) {
-                    if(Clay_Hovered() && input.isMouseReleased) {}//current_page = PAGE_CHARACTERS;
+                .cornerRadius = CLAY_CORNER_RADIUS(DEFAULT_CORNER), .userData = FrameAllocateCustomData((CustomHTMLData) {.link = CLAY_STRING("https://forms.gle/DyvKiiBnpTqjmFzC6")})}) {
                     CLAY_TEXT(CLAY_STRING("Survey"), CLAY_TEXT_CONFIG({ .fontId = FONT_ID_BOGLE, .fontSize = 28, .textColor = COLOR_LIGHT, .userData = FrameAllocateCustomData((CustomHTMLData) { .disablePointerEvents = true })}));
                 }
             }
