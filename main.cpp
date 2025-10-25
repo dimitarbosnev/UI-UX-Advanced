@@ -681,7 +681,7 @@ void MainLayout(){
                     }
                 }
                 CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } }, .border = { .width = {0, 0, 0, 2}, .color = COLOR_LIGHT }});
-                                        CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { .width = CLAY_SIZING_GROW(0) }}}){
+                CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_TOP_TO_BOTTOM, .sizing = { .width = CLAY_SIZING_GROW(0) }}}){
                     CLAY_TEXT(CLAY_STRING("Demolition"), &defaultTextConfig);
                     CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { .width = CLAY_SIZING_GROW(0) }, .padding = {DEFAULT_SPACING, 0, 0, 0 }}}){
                        CLAY_TEXT(CLAY_STRING("Destroy 5 towers in one game"), &smallTextConfig); 
@@ -701,7 +701,7 @@ void MainLayout(){
                 CLAY_AUTO_ID({.layout = { .layoutDirection = CLAY_LEFT_TO_RIGHT, .sizing = { .width = CLAY_SIZING_GROW(0) }, .padding = {0,0,0,10}}}){
                     CLAY_TEXT(CLAY_STRING(" Zander Comes to the arena: March 2026!"), &defaultTextConfig);
                 }
-                CLAY_AUTO_ID({.layout = {.sizing = { .width = CLAY_SIZING_GROW(0) }}, .image  = { &zander_image }, . aspectRatio = 16.0f/9.0f});
+                CLAY_AUTO_ID({.layout = {.sizing = { .width = CLAY_SIZING_GROW(0) }}, .image  = { &zander_image }, . aspectRatio = {16.0f/9.0f}});
 
             }
             CLAY_AUTO_ID({ .layout = { .sizing = { .width = CLAY_SIZING_GROW(0) } }, .border = { .width = {0, 0, 0, 2}, .color = COLOR_LIGHT }});
